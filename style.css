@@ -441,3 +441,42 @@ body {
     background: #111;
     border: 3px solid #555;
 }
+/* ==================================================
+   ESCONDER O QUARTO PROVISÓRIO
+   Mantém os elementos no HTML para usarmos depois
+   como áreas interativas.
+================================================== */
+
+#wall,
+#floor,
+#window,
+#curtain,
+#door,
+#switches,
+#bed,
+#nightstand,
+#desk,
+#chair,
+#bookshelf,
+#wardrobe,
+#dresser,
+#rug,
+#computer,
+#phone,
+#radio,
+#diary,
+#books,
+#photos,
+#frames,
+#mirror,
+#lamp,
+#desk-lamp,
+#backpack,
+#trash,
+#box,
+#safe,
+#cat {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
