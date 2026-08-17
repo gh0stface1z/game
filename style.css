@@ -496,20 +496,19 @@ body {
 #desk {
     position: absolute;
 
-    left: 39%;
-    top: 38%;
+    left: 40%;
+    top: 18%;
 
-    width: 35%;
-    height: 34%;
+    width: 34%;
+    height: 37%;
 
     right: auto;
     bottom: auto;
 
     cursor: pointer;
 
-    /* ROSA SÓ PARA TESTARMOS A POSIÇÃO */
-    background: rgba(255, 0, 255, 0.18) !important;
-    border: 2px dashed rgba(255, 255, 255, 0.8) !important;
+    background: transparent !important;
+    border: none !important;
 
     z-index: 20;
 }
