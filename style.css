@@ -27,6 +27,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+
+    perspective: 1200px;
 }
 
 
@@ -50,6 +52,8 @@ body {
 
     transform: translate(-50%, -50%);
     transform-origin: center center;
+
+    transform-style: preserve-3d;
 
     transition:
         transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
@@ -496,23 +500,27 @@ body {
 #desk {
     position: absolute;
 
-    left: 40%;
-    top: 18%;
+    left: 39%;
+    top: 20%;
 
-    width: 34%;
-    height: 37%;
+    width: 38%;
+    height: 36%;
 
-    right: auto;
-    bottom: auto;
-
-    cursor: pointer;
+    clip-path: polygon(
+        8% 0%,
+        92% 0%,
+        100% 78%,
+        85% 100%,
+        12% 100%,
+        0% 76%
+    );
 
     background: transparent !important;
     border: none !important;
 
+    cursor: pointer;
     z-index: 20;
 }
-
 
 /* ==================================================
    ZOOM DA MESA
@@ -521,9 +529,9 @@ body {
 #room.zoom-desk {
     transform:
         translate(-50%, -50%)
-        scale(2.15);
+        scale(2.1);
 
-    transform-origin: 57% 55%;
+    transform-origin: 61% 36%;
 }
 
 
