@@ -40,17 +40,16 @@ body {
     left: 50%;
     top: 50%;
 
-    /* proporção exata da nossa imagem */
-    width: min(100vw, calc(100vh * 5 / 3));
-    aspect-ratio: 5 / 3;
+    width: min(100vw, calc(100vh * 3 / 2));
+    aspect-ratio: 3 / 2;
 
-    background-image: url("quarto.png");
-    background-size: 100% 100%;
+    background-image: url("./quarto.png");
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
     transform: translate(-50%, -50%);
-    transform-origin: center;
+    transform-origin: center center;
 
     transition:
         transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
