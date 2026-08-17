@@ -489,3 +489,68 @@ body {
     border: none !important;
     box-shadow: none !important;
 }
+
+/* ==================================================
+   TESTE DE ÁREA CLICÁVEL - MESA
+================================================== */
+
+#desk {
+    position: absolute;
+
+    left: 39%;
+    top: 38%;
+
+    width: 35%;
+    height: 34%;
+
+    right: auto;
+    bottom: auto;
+
+    cursor: pointer;
+
+    /* ROSA SÓ PARA TESTARMOS A POSIÇÃO */
+    background: rgba(255, 0, 255, 0.18) !important;
+    border: 2px dashed rgba(255, 255, 255, 0.8) !important;
+
+    z-index: 20;
+}
+
+
+/* ==================================================
+   ZOOM DA MESA
+================================================== */
+
+#room.zoom-desk {
+    transform:
+        translate(-50%, -50%)
+        scale(2.15);
+
+    transform-origin: 57% 55%;
+}
+
+
+/* ==================================================
+   BOTÃO VOLTAR
+================================================== */
+
+#back-button {
+    display: none;
+    pointer-events: auto;
+
+    position: fixed;
+    top: 25px;
+    left: 25px;
+
+    z-index: 9999;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(15, 15, 20, 0.85);
+    color: white;
+
+    font-size: 16px;
+    cursor: pointer;
+}
