@@ -1,238 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Meu Quarto</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Quarto</title>
+  <link rel="stylesheet" href="estilo.css" />
 </head>
-
 <body>
-
-    <!-- ==================================================
-         JOGO
-    =================================================== -->
-
-    <main id="game">
-
-        <!-- ==================================================
-             QUARTO
-        =================================================== -->
-
-        <section id="room">
-
-            <!-- AMBIENTE -->
-            <div id="environment">
-
-                <!-- Parede -->
-                <div id="wall"></div>
-
-                <!-- Piso -->
-                <div id="floor"></div>
-
-                <!-- Janela -->
-                <div id="window"></div>
-
-                <!-- Cortina -->
-                <div id="curtain"></div>
-
-                <!-- Porta -->
-                <div id="door"></div>
-
-                <!-- Interruptores -->
-                <div id="switches"></div>
-
-            </div>
-
-
-            <!-- ==================================================
-                 MÓVEIS
-            ================================================== -->
-
-            <div id="furniture">
-
-                <!-- Cama -->
-                <div id="bed"></div>
-
-                <!-- Criado-mudo -->
-                <div id="nightstand"></div>
-
-                <!-- Mesa -->
-                <div id="desk"></div>
-
-                <!-- Cadeira -->
-                <div id="chair"></div>
-
-                <!-- Estante -->
-                <div id="bookshelf"></div>
-
-                <!-- Guarda-roupa -->
-                <div id="wardrobe"></div>
-
-                <!-- Gaveteiro -->
-                <div id="dresser"></div>
-
-                <!-- Tapete -->
-                <div id="rug"></div>
-
-            </div>
-
-
-            <!-- ==================================================
-                 OBJETOS
-            ================================================== -->
-
-            <div id="objects">
-
-                <!-- Computador -->
-                <div id="computer"></div>
-
-                <!-- Celular -->
-                <div id="phone"></div>
-
-                <!-- Rádio -->
-                <div id="radio"></div>
-
-                <!-- Diário -->
-                <div id="diary"></div>
-
-                <!-- Livros -->
-                <div id="books"></div>
-
-                <!-- Fotos -->
-                <div id="photos"></div>
-
-                <!-- Quadros -->
-                <div id="frames"></div>
-
-                <!-- Espelho -->
-                <div id="mirror"></div>
-
-                <!-- Abajur -->
-                <div id="lamp"></div>
-
-                <!-- Luminária -->
-                <div id="desk-lamp"></div>
-
-                <!-- Mochila -->
-                <div id="backpack"></div>
-
-                <!-- Lixeira -->
-                <div id="trash"></div>
-
-                <!-- Caixa -->
-                <div id="box"></div>
-
-                <!-- Cofre -->
-                <div id="safe"></div>
-
-            </div>
-
-
-            <!-- ==================================================
-                 ANIMAIS / PERSONAGENS
-            ================================================== -->
-
-            <div id="characters">
-
-                <!-- Gato -->
-                <div id="cat"></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             INTERFACE DO JOGADOR
-        ================================================== -->
-
-        <section id="interface">
-
-            <!-- Inventário -->
-            <aside id="inventory">
-
-                <div id="inventory-header">
-                    <h2>Inventário</h2>
-                </div>
-
-                <div id="inventory-items">
-                    <!-- Itens aparecerão aqui -->
-                </div>
-
-            </aside>
-
-
-            <!-- Caderno de notas -->
-            <aside id="notes">
-
-                <div id="notes-header">
-                    <h2>Minhas notas</h2>
-                </div>
-
-                <textarea
-                    id="notes-text"
-                    placeholder="Escreva suas anotações..."
-                ></textarea>
-
-            </aside>
-
-
-            <!-- Informações do objeto -->
-            <div id="interaction">
-
-                <h2 id="interaction-title"></h2>
-
-                <p id="interaction-description"></p>
-
-                <div id="interaction-actions">
-                    <!-- Botões de interação aparecerão aqui -->
-                </div>
-
-            </div>
-
-
-            <!-- Botão para voltar do zoom -->
-            <button id="back-button" type="button">
-                Voltar
-            </button>
-
-        </section>
-
-
-        <!-- ==================================================
-             TELAS / JANELAS ESPECIAIS
-        ================================================== -->
-
-        <section id="overlays">
-
-            <!-- Tela do computador -->
-            <div id="computer-screen"></div>
-
-            <!-- Tela do celular -->
-            <div id="phone-screen"></div>
-
-            <!-- Diário aberto -->
-            <div id="diary-screen"></div>
-
-            <!-- Leitor de documentos -->
-            <div id="document-screen"></div>
-
-            <!-- Cofre -->
-            <div id="safe-screen"></div>
-
-        </section>
-
-    </main>
-
-
-    <!-- JavaScript -->
-    <script src="script.js"></script>
-
+  <div id="app">
+    <div id="scene-container"></div>
+
+    <button id="backButton">Voltar</button>
+
+    <div id="inventory">Inventário</div>
+
+    <div id="notesPanel">
+      <h3>Minhas notas</h3>
+      <textarea id="notesText" placeholder="Escreva suas anotações..."></textarea>
+    </div>
+
+    <div id="interactionBox">
+      <h2 id="interactionTitle">Quarto</h2>
+      <p id="interactionText">Clique em algum item do quarto.</p>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.167.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.167.1/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module" src="script.js"></script>
 </body>
-
 </html>
