@@ -1,595 +1,565 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Alguém Especial ✨</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins & Bubblegum Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feito Pra Você 🎀</title>
+  <style>
+    :root {
+      --bg-dark: #130a21;
+      --bg-card: rgba(35, 20, 58, 0.75);
+      --purple-primary: #8b5cf6;
+      --purple-accent: #c084fc;
+      --pink-accent: #f472b6;
+      --text-color: #f3e8ff;
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        pastel: {
-                            pink: '#FFD1DC',
-                            lightPink: '#FFF0F5',
-                            purple: '#E6E6FA',
-                            lavender: '#DCD0FF',
-                            cream: '#FFFDD0',
-                            gold: '#FFE5B4',
-                            deepPink: '#FF85A1',
-                            accent: '#9B51E0'
-                        }
-                    },
-                    fontFamily: {
-                        poppins: ['Poppins', 'sans-serif'],
-                        cute: ['Bubblegum Sans', 'cursive']
-                    }
-                }
-            }
-        }
-    </script>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    <style>
-        /* Custom Styles & CSS Animations */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fff5f7 0%, #f3e8ff 50%, #fff0f5 100%);
-            color: #4a4a4a;
-            overflow-x: hidden;
-        }
+    body {
+      background: radial-gradient(circle at center, #2e1065, var(--bg-dark));
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        .cute-font {
-            font-family: 'Bubblegum Sans', cursive;
-        }
+    /* Partículas de Fundo Animadas */
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 10px 30px -5px rgba(235, 180, 200, 0.3);
-        }
+    .particle {
+      position: absolute;
+      background: rgba(192, 132, 252, 0.4);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
 
-        .floating-heart {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatUp linear infinite;
-        }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-30px) scale(1.2); opacity: 0.8; }
+    }
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) scale(0.5) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1.2) rotate(360deg);
-                opacity: 0;
-            }
-        }
+    /* TELA DE ENTRADA (ENVELOPE) */
+    #gatekeeper {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
 
-        .coupon-border {
-            background-image: repeating-linear-gradient(0deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(90deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(180deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(270deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px);
-            background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px;
-            background-position: 0 0, 0 0, 100% 0, 0 100%;
-            background-repeat: no-repeat;
-        }
+    .envelope-wrapper {
+      background: rgba(46, 16, 101, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      border: 2px solid rgba(192, 132, 252, 0.3);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-width: 350px;
+      width: 90%;
+    }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #fff0f5;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffd1dc;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff85a1;
-        }
-    </style>
+    .envelope-icon {
+      font-size: 70px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .envelope-icon:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .password-box {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .password-box input {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--purple-accent);
+      background: rgba(19, 10, 33, 0.8);
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .password-box button {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .password-box button:hover {
+      opacity: 0.9;
+    }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* PAINEL PRINCIPAL (DASHBOARD) */
+    #main-content {
+      width: 100%;
+      max-width: 1000px;
+      padding: 30px 20px;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #fff, var(--pink-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #d8b4fe;
+      font-size: 1.05rem;
+    }
+
+    /* GRADE DOS 9 CARTOES */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      border-radius: 18px;
+      padding: 25px 20px;
+      text-align: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--pink-accent);
+      box-shadow: 0 8px 25px rgba(192, 132, 252, 0.25);
+    }
+
+    .card-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #f3e8ff;
+    }
+
+    /* MODAL / JANELAS DAS ABAS */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(19, 10, 33, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-body {
+      background: #1e1135;
+      border: 1px solid var(--purple-accent);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #a78bfa;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      color: var(--pink-accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ESTILOS DE CONTEÚDO DOS MODAIS (PLACEHOLDERS) */
+    .btn-action {
+      background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .input-style, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--purple-accent);
+      background: rgba(19, 10, 33, 0.6);
+      color: #fff;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    /* MINI GAME PEGA CORAÇÃO */
+    #game-canvas {
+      width: 100%;
+      height: 250px;
+      background: rgba(10, 5, 20, 0.5);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      border: 1px dashed var(--purple-accent);
+    }
+
+    .falling-heart {
+      position: absolute;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
 </head>
-<body class="min-h-screen relative pb-12">
+<body>
 
-    <!-- Container para Corações Flutuantes no Fundo -->
-    <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
+  <!-- PARTÍCULAS DE FUNDO -->
+  <div id="particles-js"></div>
 
-    <!-- Header / Nav -->
-    <header class="sticky top-0 z-40 px-4 py-3 glass-card mb-6">
-        <div class="max-w-5xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <span class="text-2xl">✨</span>
-                <span class="cute-font text-2xl text-pastel-deepPink font-bold">Um Canto Especial</span>
-            </div>
-            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
-                <a href="#galeria" class="hover:text-pastel-deepPink transition-colors">Galeria</a>
-                <a href="#gostos" class="hover:text-pastel-deepPink transition-colors">Gostos</a>
-                <a href="#playlist" class="hover:text-pastel-deepPink transition-colors">Playlist</a>
-                <a href="#cupons" class="hover:text-pastel-deepPink transition-colors">Cupons</a>
-                <a href="#quiz" class="hover:text-pastel-deepPink transition-colors">Quiz</a>
-            </nav>
-            <button onclick="abrirModalSaudade()" class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-medium px-4 py-2 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm">
-                💖 Dia Ruim?
-            </button>
-        </div>
+  <!-- TELA DE ENTRADA (ENVELOPE E SENHA) -->
+  <div id="gatekeeper">
+    <div class="envelope-wrapper">
+      <div class="envelope-icon" id="envelope-btn">✉️</div>
+      <h2>Para Você...</h2>
+      <p style="font-size: 0.9rem; color: #a78bfa; margin-top: 5px;">Como a gente sempre se chama?</p>
+
+      <div class="password-box">
+        <input type="text" id="password-input" placeholder="Digite a palavra..." autocomplete="off">
+        <button id="unlock-btn">Abrir Presente ✨</button>
+      </div>
+      <p class="error-msg" id="error-msg">Ops! Essa não é a palavra mágica...</p>
+    </div>
+  </div>
+
+  <!-- PAINEL PRINCIPAL -->
+  <div id="main-content">
+    <header>
+      <h1>Espaço Especial 🎀</h1>
+      <p>Clique em qualquer cartão abaixo para explorar os seus mimos!</p>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 space-y-16 relative z-10">
+    <div class="grid-container">
+      <div class="card" onclick="openModal('modal-feito-pra-voce')">
+        <div class="card-icon">🎀</div>
+        <div class="card-title">Feito Pra Você</div>
+      </div>
 
-        <!-- 1. HERO SECTION -->
-        <section class="text-center py-12 md:py-20 glass-card rounded-3xl p-8 relative overflow-hidden">
-            <div class="absolute -top-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-60"></div>
-            <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-purple-200 rounded-full blur-2xl opacity-60"></div>
-            
-            <span class="inline-block px-4 py-1.5 bg-pink-100 text-pastel-deepPink rounded-full text-xs font-semibold mb-4 tracking-wide shadow-sm">
-                CRIADO COM CARINHO ESPECIAL PARA VOCÊ 🌸
-            </span>
-            <h1 class="cute-font text-4xl sm:text-6xl text-gray-800 mb-4 leading-tight">
-                Um Cantinho na Web Só Seu!
-            </h1>
-            <p class="text-gray-600 max-w-xl mx-auto text-sm sm:text-base mb-8 leading-relaxed">
-                Juntei algumas lembranças, piadas, músicas e detalhes que sempre me lembram de você nesse cantinho interativo. Espero que traga um sorriso ao seu rosto! ✨
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#cupons" class="bg-pastel-deepPink hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2">
-                    🎟️ Ver Seus Cupons
-                </a>
-                <a href="#quiz" class="bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-semibold px-6 py-3 rounded-full shadow-md transition-all transform hover:scale-105 flex items-center gap-2">
-                    🎯 Jogar Quiz
-                </a>
-            </div>
-        </section>
+      <div class="card" onclick="openModal('modal-cartinhas')">
+        <div class="card-icon">💌</div>
+        <div class="card-title">Cartinhas Pra Mim</div>
+      </div>
 
-        <!-- 2. NOSSA GALERIA / LINHA DO TEMPO -->
-        <section id="galeria" class="scroll-mt-20">
-            <div class="text-center mb-8">
-                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">📸 Momentos Marcantes</h2>
-                <p class="text-gray-500 text-sm">Pequenos flashes de histórias engraçadas ou legais que vivemos</p>
-            </div>
+      <div class="card" onclick="openModal('modal-game')">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Pega Meu Coração</div>
+      </div>
 
-            <div class="relative border-l-2 border-pink-200 ml-4 md:ml-32 space-y-8">
-                
-                <!-- Timeline Item 1 -->
-                <div class="relative pl-8 md:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-pastel-deepPink rounded-full border-4 border-white shadow"></div>
-                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
-                        <span class="text-xs font-semibold text-pink-500 bg-pink-50 px-2.5 py-1 rounded-md">Primeiro Papo</span>
-                        <h3 class="font-bold text-gray-800 text-lg mt-2">O dia em que começamos a conversar</h3>
-                        <p class="text-gray-600 text-sm mt-1">Aquele momento aleatório em que a conversa fluiu tão fácil que quando fomos ver já eram 2 horas da manhã.</p>
-                        <div class="mt-3 rounded-xl overflow-hidden shadow-inner bg-pink-50/50 p-2 text-center text-xs text-gray-500 italic">
-                            💬 "Quem diria que uma mensagem boba renderia tanto assunto?"
-                        </div>
-                    </div>
-                </div>
+      <div class="card" onclick="openModal('modal-biscoito')">
+        <div class="card-icon">🥠</div>
+        <div class="card-title">Sorte do Dia</div>
+      </div>
 
-                <!-- Timeline Item 2 -->
-                <div class="relative pl-8 md:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-purple-400 rounded-full border-4 border-white shadow"></div>
-                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
-                        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Momento Engraçado</span>
-                        <h3 class="font-bold text-gray-800 text-lg mt-2">A piada interna que ninguém entende</h3>
-                        <p class="text-gray-600 text-sm mt-1">Sempre que lembro desse dia ou dessa frase específica, fico rindo sozinho. Você sabe exatamente do que estou falando!</p>
-                        <div class="mt-3 bg-purple-50 rounded-xl p-3 flex items-center justify-between">
-                            <span class="text-xs text-purple-700 font-medium">Nível de risada: 10/10 😂</span>
-                            <span class="text-xs text-purple-400">Memória Guardada</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="card" onclick="openModal('modal-cinema')">
+        <div class="card-icon">🍿</div>
+        <div class="card-title">Sessão Pipoca a Dois</div>
+      </div>
 
-                <!-- Timeline Item 3 -->
-                <div class="relative pl-8 md:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-amber-400 rounded-full border-4 border-white shadow"></div>
-                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
-                        <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Descobertas</span>
-                        <h3 class="font-bold text-gray-800 text-lg mt-2">Descobrindo que gostamos das mesmas coisas</h3>
-                        <p class="text-gray-600 text-sm mt-1">Aquele choque quando percebemos que compartilhamos os mesmos gostos aleatórios para músicas, séries e comidas.</p>
-                    </div>
-                </div>
+      <div class="card" onclick="openModal('modal-motivos')">
+        <div class="card-icon">🌟</div>
+        <div class="card-title">Motivos Pelos Quais Você é Incrível</div>
+      </div>
 
-            </div>
-        </section>
+      <div class="card" onclick="openModal('modal-mimos')">
+        <div class="card-icon">🎟️</div>
+        <div class="card-title">Vale-Mimos</div>
+      </div>
 
-        <!-- 3. MURAL DOS GOSTOS DELA -->
-        <section id="gostos" class="scroll-mt-20">
-            <div class="text-center mb-8">
-                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">⭐ Mural dos Seus Favoritos</h2>
-                <p class="text-gray-500 text-sm">Porque eu presto atenção em tudo que você gosta!</p>
-            </div>
+      <div class="card" onclick="openModal('modal-musicas')">
+        <div class="card-icon">🎵</div>
+        <div class="card-title">Músicas Que Lembram Você</div>
+      </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                
-                <!-- Card 1 -->
-                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
-                    <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                        🎬
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-1">Série / Filme Favorito</h3>
-                    <p class="text-xs text-pink-500 font-medium mb-2">Maratonas infinitas</p>
-                    <p class="text-gray-600 text-sm">Aquelas produções que você passa horas assistindo (ou me recomendando para assistir junto!).</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
-                    <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                        🧋
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-1">Comida / Doce Supremo</h3>
-                    <p class="text-xs text-purple-500 font-medium mb-2">Remédio para qualquer dia ruim</p>
-                    <p class="text-gray-600 text-sm">Seja um açaí caprichado, um doce específico ou aquele café bem quentinho.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
-                    <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                        🎧
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-1">Vibe Musical</h3>
-                    <p class="text-xs text-amber-500 font-medium mb-2">Sempre no fone de ouvido</p>
-                    <p class="text-gray-600 text-sm">Artistas e ritmos que combinam perfeitamente com a sua energia e seu estilo.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 4. PLAYER DE MÚSICA (PLAYLIST) -->
-        <section id="playlist" class="scroll-mt-20">
-            <div class="text-center mb-8">
-                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎵 Sua Playlist Especial</h2>
-                <p class="text-gray-500 text-sm">Músicas que me fazem lembrar de você no instante em que tocam</p>
-            </div>
-
-            <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-lg mx-auto shadow-2xl">
-                <!-- Discos/Capa Simulação -->
-                <div class="flex items-center gap-6 mb-6">
-                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shadow-md bg-gradient-to-tr from-pink-300 to-purple-300 flex items-center justify-center text-4xl shrink-0" id="player-cover">
-                        ✨
-                    </div>
-                    <div class="overflow-hidden">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-pink-500 bg-pink-100 px-2 py-0.5 rounded">Tocando do Coração</span>
-                        <h3 class="font-bold text-gray-800 text-lg sm:text-xl truncate mt-1" id="track-title">Nome da Música</h3>
-                        <p class="text-gray-500 text-sm truncate" id="track-artist">Artista Favorito</p>
-                        <p class="text-xs text-purple-500 mt-2 italic truncate" id="track-note">"Essa lembra aquele nosso momento!"</p>
-                    </div>
-                </div>
-
-                <!-- Barra de Progresso Interativa -->
-                <div class="space-y-1 mb-6">
-                    <div class="w-full bg-gray-200 rounded-full h-2 cursor-pointer relative" id="progress-bar-container" onclick="seekTrack(event)">
-                        <div class="bg-gradient-to-r from-pink-400 to-purple-500 h-2 rounded-full w-1/3 transition-all duration-200" id="progress-bar"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-400">
-                        <span id="current-time">1:15</span>
-                        <span id="total-time">3:30</span>
-                    </div>
-                </div>
-
-                <!-- Controles -->
-                <div class="flex items-center justify-center gap-6">
-                    <button onclick="prevTrack()" class="text-gray-400 hover:text-gray-700 transition-colors text-2xl">
-                        ⏮️
-                    </button>
-                    <button onclick="togglePlay()" id="play-btn" class="w-14 h-14 bg-pastel-deepPink hover:bg-pink-600 text-white rounded-full flex items-center justify-center text-2xl shadow-lg transform hover:scale-105 transition-all">
-                        ▶️
-                    </button>
-                    <button onclick="nextTrack()" class="text-gray-400 hover:text-gray-700 transition-colors text-2xl">
-                        ⏭️
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. CUPONS INTERATIVOS -->
-        <section id="cupons" class="scroll-mt-20">
-            <div class="text-center mb-4">
-                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎟️ Menu de Cupons Especiais</h2>
-                <p class="text-gray-500 text-sm">Válidos a qualquer momento! Basta clicar em 'Resgatar' para usar.</p>
-            </div>
-
-            <!-- Contador de Cupons Resgatados -->
-            <div class="text-center mb-8">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-pink-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">
-                    Cupons resgatados: <span id="coupon-count" class="text-pastel-deepPink font-bold text-sm">0</span> / 4
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                
-                <!-- Cupom 1 -->
-                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-pink-300 hover:border-pink-400" id="coupon-card-1">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🍨</span>
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-pink-500 bg-pink-100 px-2 py-0.5 rounded">Infinito</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg">Vale Açaí / Sorvete</h3>
-                    <p class="text-gray-600 text-xs mt-1 mb-4">Direito a um açaí caprichado ou sorvete por minha conta para adoçar seu dia.</p>
-                    <button onclick="resgatarCupom(1, 'Vale Açaí / Sorvete')" id="coupon-btn-1" class="w-full bg-pink-100 hover:bg-pink-200 text-pastel-deepPink font-semibold py-2 rounded-xl text-xs transition-colors">
-                        Resgatar Cupom ✨
-                    </button>
-                </div>
-
-                <!-- Cupom 2 -->
-                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-purple-300 hover:border-purple-400" id="coupon-card-2">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🎬</span>
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-purple-500 bg-purple-100 px-2 py-0.5 rounded">Cinema em Casa</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg">Poder de Escolha do Filme</h3>
-                    <p class="text-gray-600 text-xs mt-1 mb-4">Você escolhe o filme ou série sem nenhuma reclamação da minha parte (mesmo se for ruim!).</p>
-                    <button onclick="resgatarCupom(2, 'Poder de Escolha do Filme')" id="coupon-btn-2" class="w-full bg-purple-100 hover:bg-purple-200 text-purple-600 font-semibold py-2 rounded-xl text-xs transition-colors">
-                        Resgatar Cupom ✨
-                    </button>
-                </div>
-
-                <!-- Cupom 3 -->
-                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-amber-300 hover:border-amber-400" id="coupon-card-3">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🎧</span>
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-500 bg-amber-100 px-2 py-0.5 rounded">Sessão Desabafo</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg">Ouvinte VIP Sem Julgamentos</h3>
-                    <p class="text-gray-600 text-xs mt-1 mb-4">Direito a desabafar sobre qualquer coisa, mandar 50 áudios e receber apoio total.</p>
-                    <button onclick="resgatarCupom(3, 'Ouvinte VIP')" id="coupon-btn-3" class="w-full bg-amber-100 hover:bg-amber-200 text-amber-700 font-semibold py-2 rounded-xl text-xs transition-colors">
-                        Resgatar Cupom ✨
-                    </button>
-                </div>
-
-                <!-- Cupom 4 -->
-                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-emerald-300 hover:border-emerald-400" id="coupon-card-4">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🍕</span>
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-500 bg-emerald-100 px-2 py-0.5 rounded">Gastronomia</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg">Escolher a Comida do Role</h3>
-                    <p class="text-gray-600 text-xs mt-1 mb-4">A palavra final de onde vamos comer na próxima vez é 100% sua!</p>
-                    <button onclick="resgatarCupom(4, 'Escolher a Comida')" id="coupon-btn-4" class="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-semibold py-2 rounded-xl text-xs transition-colors">
-                        Resgatar Cupom ✨
-                    </button>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 6. QUIZ DIVERTIDO -->
-        <section id="quiz" class="scroll-mt-20">
-            <div class="text-center mb-8">
-                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎯 Mini Quiz de Nós Dois</h2>
-                <p class="text-gray-500 text-sm">Sera que você acerta todas as perguntas sobre a nossa amizade?</p>
-            </div>
-
-            <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-xl mx-auto shadow-xl" id="quiz-container">
-                <div id="quiz-body">
-                    <!-- Pergunta renderizada via JS -->
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODAL "PARA UM DIA RUIM" -->
-    <div id="modal-saudade" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="glass-card bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
-            <div class="text-center">
-                <span class="text-5xl mb-4 block animate-bounce">💌</span>
-                <h3 class="cute-font text-2xl text-gray-800 mb-2">Mensagem Especial para Você</h3>
-                <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider">Só para te lembrar...</p>
-                
-                <div class="bg-pink-50 rounded-2xl p-4 text-gray-700 text-sm italic mb-6 leading-relaxed border border-pink-100" id="mensagem-aleatoria">
-                    "Espero que saiba o quanto sua presença deixa tudo mais leve. Se hoje não foi um dia legal, lembre-se de respirar fundo e que amanhã é uma nova oportunidade. Conta comigo!"
-                </div>
-
-                <button onclick="fecharModalSaudade()" class="w-full bg-pastel-deepPink hover:bg-pink-600 text-white font-semibold py-3 rounded-full text-sm shadow-md transition-all">
-                    Obrigado(a)! ❤️
-                </button>
-            </div>
-        </div>
+      <div class="card" onclick="openModal('modal-precisar')">
+        <div class="card-icon">🌙</div>
+        <div class="card-title">Pra Quando Precisar</div>
+      </div>
     </div>
+  </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // 1. ANIMAÇÃO DE CORAÇÕES FLUTUANTES
-        function createHeart() {
-            const container = document.getElementById('hearts-container');
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            
-            const emojis = ['💖', '✨', '🌸', '💜', '☁️'];
-            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
-            heart.style.fontSize = Math.random() * 10 + 15 + 'px';
-            
-            container.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
-        }
-        setInterval(createHeart, 800);
+  <!-- MODAIS (CONTEÚDOS DAS ABAS) -->
 
-        // 2. PLAYER DE MÚSICA (DADOS MOCKADOS)
-        const tracks = [
-            { title: "Sua Música Favorita", artist: "Seu Artista Preferido", note: "Essa toca e eu lembro na hora do seu sorriso!", cover: "🎵" },
-            { title: "Trilha de Fundo do Nosso Papo", artist: "Vibe Relax", note: "Perfeita para conversas de madrugadas.", cover: "🌙" },
-            { title: "Aquela do Sorriso", artist: "Banda Especial", note: "Apenas uma vibe boa para te alegrar.", cover: "✨" }
-        ];
+  <!-- 🎀 1. Feito Pra Você -->
+  <div class="modal" id="modal-feito-pra-voce">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-feito-pra-voce')">&times;</button>
+      <div class="modal-title">🎀 Feito Pra Você</div>
+      <p id="txt-feito-pra-voce">[Texto de Boas-Vindas virá aqui...]</p>
+    </div>
+  </div>
 
-        let currentTrackIndex = 0;
-        let isPlaying = false;
+  <!-- 💌 2. Cartinhas Pra Mim -->
+  <div class="modal" id="modal-cartinhas">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-cartinhas')">&times;</button>
+      <div class="modal-title">💌 Cartinhas Pra Mim</div>
+      <p style="margin-bottom: 15px;">Escreva uma mensagem ou recado que vai direto para mim!</p>
+      <textarea rows="4" placeholder="Escreva seu recadinho aqui..."></textarea>
+      <button class="btn-action">Enviar Recadinho</button>
+    </div>
+  </div>
 
-        function updatePlayer() {
-            const track = tracks[currentTrackIndex];
-            document.getElementById('track-title').innerText = track.title;
-            document.getElementById('track-artist').innerText = track.artist;
-            document.getElementById('track-note').innerText = `"${track.note}"`;
-            document.getElementById('player-cover').innerText = track.cover;
-        }
+  <!-- 🎮 3. Pega Meu Coração -->
+  <div class="modal" id="modal-game">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-game')">&times;</button>
+      <div class="modal-title">🎮 Pega Meu Coração</div>
+      <p style="margin-bottom: 10px;">Pontuação: <span id="game-score">0</span></p>
+      <div id="game-canvas"></div>
+      <button class="btn-action" onclick="startGame()">Iniciar Jogo</button>
+    </div>
+  </div>
 
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            const btn = document.getElementById('play-btn');
-            btn.innerText = isPlaying ? '⏸️' : '▶️';
-        }
+  <!-- 🥠 4. Sorte do Dia -->
+  <div class="modal" id="modal-biscoito">
+    <div class="modal-body" style="text-align: center;">
+      <button class="close-btn" onclick="closeModal('modal-biscoito')">&times;</button>
+      <div class="modal-title" style="justify-content: center;">🥠 Sorte do Dia</div>
+      <div id="biscoito-btn" style="font-size: 80px; cursor: pointer; margin: 20px 0;">🥠</div>
+      <p id="biscoito-resposta" style="font-size: 1.1rem; color: #d8b4fe;">Clique no biscoitinho para abrir a sua sorte!</p>
+    </div>
+  </div>
 
-        function nextTrack() {
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-            updatePlayer();
-        }
+  <!-- 🍿 5. Sessão Pipoca -->
+  <div class="modal" id="modal-cinema">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-cinema')">&times;</button>
+      <div class="modal-title">🍿 Sessão Pipoca a Dois</div>
+      <div id="lista-cinema">[Lista de Filmes e Séries virá aqui...]</div>
+    </div>
+  </div>
 
-        function prevTrack() {
-            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-            updatePlayer();
-        }
+  <!-- 🌟 6. Motivos -->
+  <div class="modal" id="modal-motivos">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-motivos')">&times;</button>
+      <div class="modal-title">🌟 Motivos Pelos Quais Você é Incrível</div>
+      <div id="lista-motivos">[Mural de Cards com Motivos/Elogios virá aqui...]</div>
+    </div>
+  </div>
 
-        function seekTrack(event) {
-            const container = document.getElementById('progress-bar-container');
-            const rect = container.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const percentage = (clickX / rect.width) * 100;
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
-        }
+  <!-- 🎟️ 7. Vale-Mimos -->
+  <div class="modal" id="modal-mimos">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-mimos')">&times;</button>
+      <div class="modal-title">🎟️️ Vale-Mimos</div>
+      <div id="lista-mimos">[Cupons Interativos virão aqui...]</div>
+    </div>
+  </div>
 
-        // 3. CUPONS INTERATIVOS
-        let resgatados = 0;
+  <!-- 🎵 8. Músicas -->
+  <div class="modal" id="modal-musicas">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-musicas')">&times;</button>
+      <div class="modal-title">🎵 Músicas Que Lembram Você</div>
+      <div id="lista-musicas">[Playlist e Comentários virão aqui...]</div>
+    </div>
+  </div>
 
-        function resgatarCupom(id, nome) {
-            const btn = document.getElementById(`coupon-btn-${id}`);
-            const card = document.getElementById(`coupon-card-${id}`);
+  <!-- 🌙 9. Pra Quando Precisar -->
+  <div class="modal" id="modal-precisar">
+    <div class="modal-body">
+      <button class="close-btn" onclick="closeModal('modal-precisar')">&times;</button>
+      <div class="modal-title">🌙 Pra Quando Precisar</div>
+      <div id="lista-precisar">[Botões de Apoio e Recadinhos virão aqui...]</div>
+    </div>
+  </div>
 
-            if (!btn.disabled) {
-                btn.disabled = true;
-                btn.innerText = 'Resgatado! 🎉';
-                btn.className = 'w-full bg-gray-200 text-gray-500 font-semibold py-2 rounded-xl text-xs cursor-not-allowed';
-                card.classList.add('opacity-75');
+  <script>
+    // 1. GERAR PARTÍCULAS NO FUNDO
+    const particlesContainer = document.getElementById('particles-js');
+    for (let i = 0; i < 25; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      const size = Math.random() * 6 + 2;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 8}s`;
+      particlesContainer.appendChild(particle);
+    }
 
-                resgatados++;
-                document.getElementById('coupon-count').innerText = resgatados;
+    // 2. LÓGICA DE SENHA E DESBLOQUEIO
+    const unlockBtn = document.getElementById('unlock-btn');
+    const passInput = document.getElementById('password-input');
+    const gatekeeper = document.getElementById('gatekeeper');
+    const mainContent = document.getElementById('main-content');
+    const errorMsg = document.getElementById('error-msg');
 
-                // Solta Confete ao resgatar
-                confetti({
-                    particleCount: 50,
-                    spread: 60,
-                    origin: { y: 0.8 }
-                });
-            }
-        }
+    function checkPassword() {
+      const val = passInput.value.trim().toLowerCase();
+      if (val === 'linda') {
+        gatekeeper.style.opacity = '0';
+        setTimeout(() => {
+          gatekeeper.style.visibility = 'hidden';
+          mainContent.style.opacity = '1';
+        }, 800);
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    }
 
-        // 4. MODAL "DIA RUIM"
-        const mensagens = [
-            "Espero que saiba o quanto sua presença deixa tudo mais leve. Se hoje não foi um dia legal, lembre-se de respirar fundo!",
-            "Você é incrível do seu jeitinho. Não deixa nenhum dia difícil tirar esse seu brilho único! ✨",
-            "Passando só para lembrar que você tem uma energia super especial e que sempre torço por você! 💖",
-            "Se o dia estiver pesado, lembre-se de dar uma pausa, tomar uma água e relaxar. Você merece todo o carinho!"
-        ];
+    unlockBtn.addEventListener('click', checkPassword);
+    passInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkPassword();
+    });
 
-        function abrirModalSaudade() {
-            const modal = document.getElementById('modal-saudade');
-            const msgElement = document.getElementById('mensagem-aleatoria');
-            
-            const msgSorteada = mensagens[Math.floor(Math.random() * mensagens.length)];
-            msgElement.innerText = `"${msgSorteada}"`;
+    // 3. ABRIR E FECHAR MODAIS
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
 
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-        }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
 
-        function fecharModalSaudade() {
-            const modal = document.getElementById('modal-saudade');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
+    // 4. LÓGICA DO BISCOITO DA SORTE
+    const biscoitoBtn = document.getElementById('biscoito-btn');
+    const biscoitoResposta = document.getElementById('biscoito-resposta');
+    const frasesSorte = [
+      "Seu sorriso deixa qualquer dia comum mais bonito. ✨",
+      "Sorte a minha de ter você por perto!",
+      "Uma dose extra de carinho está vindo para você hoje.",
+      "Você é o pensamento bom de alguém hoje. 💜"
+    ];
 
-        // 5. MINI QUIZ
-        const quizData = [
-            {
-                pergunta: "Quem demora mais para responder no WhatsApp?",
-                opcoes: ["Você (com certeza!)", "Eu (às vezes durmo)", "Empate técnico"],
-                correta: 0
-            },
-            {
-                pergunta: "Qual é o nosso assunto preferido de conversa?",
-                opcoes: ["Fofocas e memes", "Planos e aleatoriedades", "Ambos acima!"],
-                correta: 2
-            },
-            {
-                pergunta: "Se formos sair juntos, quem escolhe o lugar?",
-                opcoes: ["Você (tem o melhor gosto)", "Eu (tento adivinhar)", "Ficamos 2 horas decidindo"],
-                correta: 2
-            }
-        ];
+    biscoitoBtn.addEventListener('click', () => {
+      const sorte = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
+      biscoitoResposta.textContent = sorte;
+      biscoitoBtn.style.transform = 'scale(1.2) rotate(10deg)';
+      setTimeout(() => biscoitoBtn.style.transform = 'scale(1)', 200);
+    });
 
-        let quizIndex = 0;
-        let pontuacao = 0;
+    // 5. LÓGICA DO MINI GAME PEGA CORAÇÃO
+    let score = 0;
+    let gameInterval;
+    function startGame() {
+      score = 0;
+      document.getElementById('game-score').textContent = score;
+      const canvas = document.getElementById('game-canvas');
+      canvas.innerHTML = '';
+      
+      clearInterval(gameInterval);
+      gameInterval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'falling-heart';
+        heart.textContent = '💖';
+        heart.style.left = Math.random() * (canvas.clientWidth - 30) + 'px';
+        heart.style.top = '0px';
 
-        function renderQuiz() {
-            const container = document.getElementById('quiz-body');
+        heart.onclick = () => {
+          score += 10;
+          document.getElementById('game-score').textContent = score;
+          heart.remove();
+        };
 
-            if (quizIndex < quizData.length) {
-                const q = quizData[quizIndex];
-                container.innerHTML = `
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-semibold text-pink-500 uppercase tracking-wider">Pergunta ${quizIndex + 1} de ${quizData.length}</span>
-                        <span class="text-xs bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full font-bold">Pontos: ${pontuacao}</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg sm:text-xl mb-6">${q.pergunta}</h3>
-                    <div class="space-y-3">
-                        ${q.opcoes.map((opcao, idx) => `
-                            <button onclick="responderQuiz(${idx})" class="w-full text-left p-3.5 rounded-xl border border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all text-sm text-gray-700 font-medium flex items-center justify-between group">
-                                <span>${opcao}</span>
-                                <span class="opacity-0 group-hover:opacity-100 text-pink-400">✨</span>
-                            </button>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="text-center py-6">
-                        <span class="text-5xl mb-3 block">🏆</span>
-                        <h3 class="cute-font text-3xl text-gray-800 mb-2">Quiz Concluído!</h3>
-                        <p class="text-gray-600 text-sm mb-6">Você fez <strong>${pontuacao}</strong> pontos! Obrigado por jogar esse jogo bobo!</p>
-                        <button onclick="reiniciarQuiz()" class="bg-pastel-deepPink text-white font-semibold px-6 py-2.5 rounded-full text-sm shadow-md hover:bg-pink-600 transition-all">
-                            Jogar Novamente 🔄
-                        </button>
-                    </div>
-                `;
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-            }
-        }
+        canvas.appendChild(heart);
 
-        function responderQuiz(opcaoSelecionada) {
-            pontuacao += 10;
-            quizIndex++;
-            renderQuiz();
-        }
-
-        function reiniciarQuiz() {
-            quizIndex = 0;
-            pontuacao = 0;
-            renderQuiz();
-        }
-
-        // Inicializar
-        updatePlayer();
-        renderQuiz();
-    </script>
+        let top = 0;
+        const fall = setInterval(() => {
+          top += 3;
+          heart.style.top = top + 'px';
+          if (top > canvas.clientHeight) {
+            heart.remove();
+            clearInterval(fall);
+          }
+        }, 30);
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
