@@ -1,39 +1,595 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu Quarto</title>
-  <link rel="stylesheet" href="estilo.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Alguém Especial ✨</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Bubblegum Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastel: {
+                            pink: '#FFD1DC',
+                            lightPink: '#FFF0F5',
+                            purple: '#E6E6FA',
+                            lavender: '#DCD0FF',
+                            cream: '#FFFDD0',
+                            gold: '#FFE5B4',
+                            deepPink: '#FF85A1',
+                            accent: '#9B51E0'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        cute: ['Bubblegum Sans', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & CSS Animations */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #f3e8ff 50%, #fff0f5 100%);
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
+
+        .cute-font {
+            font-family: 'Bubblegum Sans', cursive;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px -5px rgba(235, 180, 200, 0.3);
+        }
+
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .coupon-border {
+            background-image: repeating-linear-gradient(0deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(90deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(180deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px), repeating-linear-gradient(270deg, #ff85a1, #ff85a1 10px, transparent 10px, transparent 20px);
+            background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px;
+            background-position: 0 0, 0 0, 100% 0, 0 100%;
+            background-repeat: no-repeat;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffd1dc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff85a1;
+        }
+    </style>
 </head>
-<body>
-  <div id="app">
-    <div id="scene-container"></div>
+<body class="min-h-screen relative pb-12">
 
-    <button id="backButton">Voltar</button>
+    <!-- Container para Corações Flutuantes no Fundo -->
+    <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <div id="inventory">Inventário</div>
+    <!-- Header / Nav -->
+    <header class="sticky top-0 z-40 px-4 py-3 glass-card mb-6">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">✨</span>
+                <span class="cute-font text-2xl text-pastel-deepPink font-bold">Um Canto Especial</span>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                <a href="#galeria" class="hover:text-pastel-deepPink transition-colors">Galeria</a>
+                <a href="#gostos" class="hover:text-pastel-deepPink transition-colors">Gostos</a>
+                <a href="#playlist" class="hover:text-pastel-deepPink transition-colors">Playlist</a>
+                <a href="#cupons" class="hover:text-pastel-deepPink transition-colors">Cupons</a>
+                <a href="#quiz" class="hover:text-pastel-deepPink transition-colors">Quiz</a>
+            </nav>
+            <button onclick="abrirModalSaudade()" class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-medium px-4 py-2 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm">
+                💖 Dia Ruim?
+            </button>
+        </div>
+    </header>
 
-    <div id="notesPanel">
-      <h3>Minhas notas</h3>
-      <textarea id="notesText" placeholder="Escreva suas anotações..."></textarea>
+    <main class="max-w-4xl mx-auto px-4 space-y-16 relative z-10">
+
+        <!-- 1. HERO SECTION -->
+        <section class="text-center py-12 md:py-20 glass-card rounded-3xl p-8 relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-60"></div>
+            <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-purple-200 rounded-full blur-2xl opacity-60"></div>
+            
+            <span class="inline-block px-4 py-1.5 bg-pink-100 text-pastel-deepPink rounded-full text-xs font-semibold mb-4 tracking-wide shadow-sm">
+                CRIADO COM CARINHO ESPECIAL PARA VOCÊ 🌸
+            </span>
+            <h1 class="cute-font text-4xl sm:text-6xl text-gray-800 mb-4 leading-tight">
+                Um Cantinho na Web Só Seu!
+            </h1>
+            <p class="text-gray-600 max-w-xl mx-auto text-sm sm:text-base mb-8 leading-relaxed">
+                Juntei algumas lembranças, piadas, músicas e detalhes que sempre me lembram de você nesse cantinho interativo. Espero que traga um sorriso ao seu rosto! ✨
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#cupons" class="bg-pastel-deepPink hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2">
+                    🎟️ Ver Seus Cupons
+                </a>
+                <a href="#quiz" class="bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-semibold px-6 py-3 rounded-full shadow-md transition-all transform hover:scale-105 flex items-center gap-2">
+                    🎯 Jogar Quiz
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. NOSSA GALERIA / LINHA DO TEMPO -->
+        <section id="galeria" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">📸 Momentos Marcantes</h2>
+                <p class="text-gray-500 text-sm">Pequenos flashes de histórias engraçadas ou legais que vivemos</p>
+            </div>
+
+            <div class="relative border-l-2 border-pink-200 ml-4 md:ml-32 space-y-8">
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-pastel-deepPink rounded-full border-4 border-white shadow"></div>
+                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
+                        <span class="text-xs font-semibold text-pink-500 bg-pink-50 px-2.5 py-1 rounded-md">Primeiro Papo</span>
+                        <h3 class="font-bold text-gray-800 text-lg mt-2">O dia em que começamos a conversar</h3>
+                        <p class="text-gray-600 text-sm mt-1">Aquele momento aleatório em que a conversa fluiu tão fácil que quando fomos ver já eram 2 horas da manhã.</p>
+                        <div class="mt-3 rounded-xl overflow-hidden shadow-inner bg-pink-50/50 p-2 text-center text-xs text-gray-500 italic">
+                            💬 "Quem diria que uma mensagem boba renderia tanto assunto?"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-purple-400 rounded-full border-4 border-white shadow"></div>
+                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
+                        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Momento Engraçado</span>
+                        <h3 class="font-bold text-gray-800 text-lg mt-2">A piada interna que ninguém entende</h3>
+                        <p class="text-gray-600 text-sm mt-1">Sempre que lembro desse dia ou dessa frase específica, fico rindo sozinho. Você sabe exatamente do que estou falando!</p>
+                        <div class="mt-3 bg-purple-50 rounded-xl p-3 flex items-center justify-between">
+                            <span class="text-xs text-purple-700 font-medium">Nível de risada: 10/10 😂</span>
+                            <span class="text-xs text-purple-400">Memória Guardada</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8 md:pl-10 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-amber-400 rounded-full border-4 border-white shadow"></div>
+                    <div class="glass-card rounded-2xl p-5 hover:shadow-xl transition-all duration-300">
+                        <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Descobertas</span>
+                        <h3 class="font-bold text-gray-800 text-lg mt-2">Descobrindo que gostamos das mesmas coisas</h3>
+                        <p class="text-gray-600 text-sm mt-1">Aquele choque quando percebemos que compartilhamos os mesmos gostos aleatórios para músicas, séries e comidas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. MURAL DOS GOSTOS DELA -->
+        <section id="gostos" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">⭐ Mural dos Seus Favoritos</h2>
+                <p class="text-gray-500 text-sm">Porque eu presto atenção em tudo que você gosta!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        🎬
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Série / Filme Favorito</h3>
+                    <p class="text-xs text-pink-500 font-medium mb-2">Maratonas infinitas</p>
+                    <p class="text-gray-600 text-sm">Aquelas produções que você passa horas assistindo (ou me recomendando para assistir junto!).</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        🧋
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Comida / Doce Supremo</h3>
+                    <p class="text-xs text-purple-500 font-medium mb-2">Remédio para qualquer dia ruim</p>
+                    <p class="text-gray-600 text-sm">Seja um açaí caprichado, um doce específico ou aquele café bem quentinho.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-5 hover:-translate-y-2 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        🎧
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Vibe Musical</h3>
+                    <p class="text-xs text-amber-500 font-medium mb-2">Sempre no fone de ouvido</p>
+                    <p class="text-gray-600 text-sm">Artistas e ritmos que combinam perfeitamente com a sua energia e seu estilo.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. PLAYER DE MÚSICA (PLAYLIST) -->
+        <section id="playlist" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎵 Sua Playlist Especial</h2>
+                <p class="text-gray-500 text-sm">Músicas que me fazem lembrar de você no instante em que tocam</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-lg mx-auto shadow-2xl">
+                <!-- Discos/Capa Simulação -->
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shadow-md bg-gradient-to-tr from-pink-300 to-purple-300 flex items-center justify-center text-4xl shrink-0" id="player-cover">
+                        ✨
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-pink-500 bg-pink-100 px-2 py-0.5 rounded">Tocando do Coração</span>
+                        <h3 class="font-bold text-gray-800 text-lg sm:text-xl truncate mt-1" id="track-title">Nome da Música</h3>
+                        <p class="text-gray-500 text-sm truncate" id="track-artist">Artista Favorito</p>
+                        <p class="text-xs text-purple-500 mt-2 italic truncate" id="track-note">"Essa lembra aquele nosso momento!"</p>
+                    </div>
+                </div>
+
+                <!-- Barra de Progresso Interativa -->
+                <div class="space-y-1 mb-6">
+                    <div class="w-full bg-gray-200 rounded-full h-2 cursor-pointer relative" id="progress-bar-container" onclick="seekTrack(event)">
+                        <div class="bg-gradient-to-r from-pink-400 to-purple-500 h-2 rounded-full w-1/3 transition-all duration-200" id="progress-bar"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span id="current-time">1:15</span>
+                        <span id="total-time">3:30</span>
+                    </div>
+                </div>
+
+                <!-- Controles -->
+                <div class="flex items-center justify-center gap-6">
+                    <button onclick="prevTrack()" class="text-gray-400 hover:text-gray-700 transition-colors text-2xl">
+                        ⏮️
+                    </button>
+                    <button onclick="togglePlay()" id="play-btn" class="w-14 h-14 bg-pastel-deepPink hover:bg-pink-600 text-white rounded-full flex items-center justify-center text-2xl shadow-lg transform hover:scale-105 transition-all">
+                        ▶️
+                    </button>
+                    <button onclick="nextTrack()" class="text-gray-400 hover:text-gray-700 transition-colors text-2xl">
+                        ⏭️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CUPONS INTERATIVOS -->
+        <section id="cupons" class="scroll-mt-20">
+            <div class="text-center mb-4">
+                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎟️ Menu de Cupons Especiais</h2>
+                <p class="text-gray-500 text-sm">Válidos a qualquer momento! Basta clicar em 'Resgatar' para usar.</p>
+            </div>
+
+            <!-- Contador de Cupons Resgatados -->
+            <div class="text-center mb-8">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-pink-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">
+                    Cupons resgatados: <span id="coupon-count" class="text-pastel-deepPink font-bold text-sm">0</span> / 4
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- Cupom 1 -->
+                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-pink-300 hover:border-pink-400" id="coupon-card-1">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-3xl">🍨</span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-pink-500 bg-pink-100 px-2 py-0.5 rounded">Infinito</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg">Vale Açaí / Sorvete</h3>
+                    <p class="text-gray-600 text-xs mt-1 mb-4">Direito a um açaí caprichado ou sorvete por minha conta para adoçar seu dia.</p>
+                    <button onclick="resgatarCupom(1, 'Vale Açaí / Sorvete')" id="coupon-btn-1" class="w-full bg-pink-100 hover:bg-pink-200 text-pastel-deepPink font-semibold py-2 rounded-xl text-xs transition-colors">
+                        Resgatar Cupom ✨
+                    </button>
+                </div>
+
+                <!-- Cupom 2 -->
+                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-purple-300 hover:border-purple-400" id="coupon-card-2">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-3xl">🎬</span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-purple-500 bg-purple-100 px-2 py-0.5 rounded">Cinema em Casa</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg">Poder de Escolha do Filme</h3>
+                    <p class="text-gray-600 text-xs mt-1 mb-4">Você escolhe o filme ou série sem nenhuma reclamação da minha parte (mesmo se for ruim!).</p>
+                    <button onclick="resgatarCupom(2, 'Poder de Escolha do Filme')" id="coupon-btn-2" class="w-full bg-purple-100 hover:bg-purple-200 text-purple-600 font-semibold py-2 rounded-xl text-xs transition-colors">
+                        Resgatar Cupom ✨
+                    </button>
+                </div>
+
+                <!-- Cupom 3 -->
+                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-amber-300 hover:border-amber-400" id="coupon-card-3">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-3xl">🎧</span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-500 bg-amber-100 px-2 py-0.5 rounded">Sessão Desabafo</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg">Ouvinte VIP Sem Julgamentos</h3>
+                    <p class="text-gray-600 text-xs mt-1 mb-4">Direito a desabafar sobre qualquer coisa, mandar 50 áudios e receber apoio total.</p>
+                    <button onclick="resgatarCupom(3, 'Ouvinte VIP')" id="coupon-btn-3" class="w-full bg-amber-100 hover:bg-amber-200 text-amber-700 font-semibold py-2 rounded-xl text-xs transition-colors">
+                        Resgatar Cupom ✨
+                    </button>
+                </div>
+
+                <!-- Cupom 4 -->
+                <div class="glass-card rounded-2xl p-5 relative overflow-hidden transition-all duration-300 border-2 border-dashed border-emerald-300 hover:border-emerald-400" id="coupon-card-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-3xl">🍕</span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-500 bg-emerald-100 px-2 py-0.5 rounded">Gastronomia</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg">Escolher a Comida do Role</h3>
+                    <p class="text-gray-600 text-xs mt-1 mb-4">A palavra final de onde vamos comer na próxima vez é 100% sua!</p>
+                    <button onclick="resgatarCupom(4, 'Escolher a Comida')" id="coupon-btn-4" class="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-semibold py-2 rounded-xl text-xs transition-colors">
+                        Resgatar Cupom ✨
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. QUIZ DIVERTIDO -->
+        <section id="quiz" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="cute-font text-3xl sm:text-4xl text-gray-800">🎯 Mini Quiz de Nós Dois</h2>
+                <p class="text-gray-500 text-sm">Sera que você acerta todas as perguntas sobre a nossa amizade?</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-xl mx-auto shadow-xl" id="quiz-container">
+                <div id="quiz-body">
+                    <!-- Pergunta renderizada via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL "PARA UM DIA RUIM" -->
+    <div id="modal-saudade" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="text-center">
+                <span class="text-5xl mb-4 block animate-bounce">💌</span>
+                <h3 class="cute-font text-2xl text-gray-800 mb-2">Mensagem Especial para Você</h3>
+                <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider">Só para te lembrar...</p>
+                
+                <div class="bg-pink-50 rounded-2xl p-4 text-gray-700 text-sm italic mb-6 leading-relaxed border border-pink-100" id="mensagem-aleatoria">
+                    "Espero que saiba o quanto sua presença deixa tudo mais leve. Se hoje não foi um dia legal, lembre-se de respirar fundo e que amanhã é uma nova oportunidade. Conta comigo!"
+                </div>
+
+                <button onclick="fecharModalSaudade()" class="w-full bg-pastel-deepPink hover:bg-pink-600 text-white font-semibold py-3 rounded-full text-sm shadow-md transition-all">
+                    Obrigado(a)! ❤️
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="interactionBox">
-      <h2 id="interactionTitle">Quarto</h2>
-      <p id="interactionText">Clique em algum item do quarto.</p>
-    </div>
-  </div>
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. ANIMAÇÃO DE CORAÇÕES FLUTUANTES
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            
+            const emojis = ['💖', '✨', '🌸', '💜', '☁️'];
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.fontSize = Math.random() * 10 + 15 + 'px';
+            
+            container.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+        setInterval(createHeart, 800);
 
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.167.1/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.167.1/examples/jsm/"
-      }
-    }
-  </script>
+        // 2. PLAYER DE MÚSICA (DADOS MOCKADOS)
+        const tracks = [
+            { title: "Sua Música Favorita", artist: "Seu Artista Preferido", note: "Essa toca e eu lembro na hora do seu sorriso!", cover: "🎵" },
+            { title: "Trilha de Fundo do Nosso Papo", artist: "Vibe Relax", note: "Perfeita para conversas de madrugadas.", cover: "🌙" },
+            { title: "Aquela do Sorriso", artist: "Banda Especial", note: "Apenas uma vibe boa para te alegrar.", cover: "✨" }
+        ];
 
-  <script type="module" src="script.js"></script>
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        function updatePlayer() {
+            const track = tracks[currentTrackIndex];
+            document.getElementById('track-title').innerText = track.title;
+            document.getElementById('track-artist').innerText = track.artist;
+            document.getElementById('track-note').innerText = `"${track.note}"`;
+            document.getElementById('player-cover').innerText = track.cover;
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('play-btn');
+            btn.innerText = isPlaying ? '⏸️' : '▶️';
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            updatePlayer();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            updatePlayer();
+        }
+
+        function seekTrack(event) {
+            const container = document.getElementById('progress-bar-container');
+            const rect = container.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const percentage = (clickX / rect.width) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        // 3. CUPONS INTERATIVOS
+        let resgatados = 0;
+
+        function resgatarCupom(id, nome) {
+            const btn = document.getElementById(`coupon-btn-${id}`);
+            const card = document.getElementById(`coupon-card-${id}`);
+
+            if (!btn.disabled) {
+                btn.disabled = true;
+                btn.innerText = 'Resgatado! 🎉';
+                btn.className = 'w-full bg-gray-200 text-gray-500 font-semibold py-2 rounded-xl text-xs cursor-not-allowed';
+                card.classList.add('opacity-75');
+
+                resgatados++;
+                document.getElementById('coupon-count').innerText = resgatados;
+
+                // Solta Confete ao resgatar
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.8 }
+                });
+            }
+        }
+
+        // 4. MODAL "DIA RUIM"
+        const mensagens = [
+            "Espero que saiba o quanto sua presença deixa tudo mais leve. Se hoje não foi um dia legal, lembre-se de respirar fundo!",
+            "Você é incrível do seu jeitinho. Não deixa nenhum dia difícil tirar esse seu brilho único! ✨",
+            "Passando só para lembrar que você tem uma energia super especial e que sempre torço por você! 💖",
+            "Se o dia estiver pesado, lembre-se de dar uma pausa, tomar uma água e relaxar. Você merece todo o carinho!"
+        ];
+
+        function abrirModalSaudade() {
+            const modal = document.getElementById('modal-saudade');
+            const msgElement = document.getElementById('mensagem-aleatoria');
+            
+            const msgSorteada = mensagens[Math.floor(Math.random() * mensagens.length)];
+            msgElement.innerText = `"${msgSorteada}"`;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function fecharModalSaudade() {
+            const modal = document.getElementById('modal-saudade');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 5. MINI QUIZ
+        const quizData = [
+            {
+                pergunta: "Quem demora mais para responder no WhatsApp?",
+                opcoes: ["Você (com certeza!)", "Eu (às vezes durmo)", "Empate técnico"],
+                correta: 0
+            },
+            {
+                pergunta: "Qual é o nosso assunto preferido de conversa?",
+                opcoes: ["Fofocas e memes", "Planos e aleatoriedades", "Ambos acima!"],
+                correta: 2
+            },
+            {
+                pergunta: "Se formos sair juntos, quem escolhe o lugar?",
+                opcoes: ["Você (tem o melhor gosto)", "Eu (tento adivinhar)", "Ficamos 2 horas decidindo"],
+                correta: 2
+            }
+        ];
+
+        let quizIndex = 0;
+        let pontuacao = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-body');
+
+            if (quizIndex < quizData.length) {
+                const q = quizData[quizIndex];
+                container.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-semibold text-pink-500 uppercase tracking-wider">Pergunta ${quizIndex + 1} de ${quizData.length}</span>
+                        <span class="text-xs bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full font-bold">Pontos: ${pontuacao}</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg sm:text-xl mb-6">${q.pergunta}</h3>
+                    <div class="space-y-3">
+                        ${q.opcoes.map((opcao, idx) => `
+                            <button onclick="responderQuiz(${idx})" class="w-full text-left p-3.5 rounded-xl border border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all text-sm text-gray-700 font-medium flex items-center justify-between group">
+                                <span>${opcao}</span>
+                                <span class="opacity-0 group-hover:opacity-100 text-pink-400">✨</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-6">
+                        <span class="text-5xl mb-3 block">🏆</span>
+                        <h3 class="cute-font text-3xl text-gray-800 mb-2">Quiz Concluído!</h3>
+                        <p class="text-gray-600 text-sm mb-6">Você fez <strong>${pontuacao}</strong> pontos! Obrigado por jogar esse jogo bobo!</p>
+                        <button onclick="reiniciarQuiz()" class="bg-pastel-deepPink text-white font-semibold px-6 py-2.5 rounded-full text-sm shadow-md hover:bg-pink-600 transition-all">
+                            Jogar Novamente 🔄
+                        </button>
+                    </div>
+                `;
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function responderQuiz(opcaoSelecionada) {
+            pontuacao += 10;
+            quizIndex++;
+            renderQuiz();
+        }
+
+        function reiniciarQuiz() {
+            quizIndex = 0;
+            pontuacao = 0;
+            renderQuiz();
+        }
+
+        // Inicializar
+        updatePlayer();
+        renderQuiz();
+    </script>
 </body>
 </html>
