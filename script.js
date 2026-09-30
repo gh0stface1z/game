@@ -1,15 +1,17 @@
 // 1. GERAR PARTÍCULAS NO FUNDO
 const particlesContainer = document.getElementById('particles-js');
-for (let i = 0; i < 25; i++) {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  const size = Math.random() * 6 + 2;
-  particle.style.width = `${size}px`;
-  particle.style.height = `${size}px`;
-  particle.style.left = `${Math.random() * 100}%`;
-  particle.style.top = `${Math.random() * 100}%`;
-  particle.style.animationDelay = `${Math.random() * 8}s`;
-  particlesContainer.appendChild(particle);
+if (particlesContainer) {
+  for (let i = 0; i < 25; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.animationDelay = `${Math.random() * 8}s`;
+    particlesContainer.appendChild(particle);
+  }
 }
 
 // 2. LÓGICA DE SENHA E DESBLOQUEIO
@@ -32,18 +34,22 @@ function checkPassword() {
   }
 }
 
-unlockBtn.addEventListener('click', checkPassword);
-passInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') checkPassword();
-});
+if (unlockBtn) unlockBtn.addEventListener('click', checkPassword);
+if (passInput) {
+  passInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') checkPassword();
+  });
+}
 
 // 3. ABRIR E FECHAR MODAIS
 function openModal(id) {
-  document.getElementById(id).classList.add('active');
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add('active');
 }
 
 function closeModal(id) {
-  document.getElementById(id).classList.remove('active');
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove('active');
 }
 
 // 4. LÓGICA DO BISCOITO DA SORTE
@@ -56,20 +62,24 @@ const frasesSorte = [
   "Você é o pensamento bom de alguém hoje. 💜"
 ];
 
-biscoitoBtn.addEventListener('click', () => {
-  const sorte = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
-  biscoitoResposta.textContent = sorte;
-  biscoitoBtn.style.transform = 'scale(1.2) rotate(10deg)';
-  setTimeout(() => biscoitoBtn.style.transform = 'scale(1)', 200);
-});
+if (biscoitoBtn) {
+  biscoitoBtn.addEventListener('click', () => {
+    const sorte = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
+    if (biscoitoResposta) biscoitoResposta.textContent = sorte;
+    biscoitoBtn.style.transform = 'scale(1.2) rotate(10deg)';
+    setTimeout(() => biscoitoBtn.style.transform = 'scale(1)', 200);
+  });
+}
 
 // 5. LÓGICA DO MINI GAME PEGA CORAÇÃO
 let score = 0;
 let gameInterval;
 function startGame() {
   score = 0;
-  document.getElementById('game-score').textContent = score;
+  const scoreDisplay = document.getElementById('game-score');
+  if (scoreDisplay) scoreDisplay.textContent = score;
   const canvas = document.getElementById('game-canvas');
+  if (!canvas) return;
   canvas.innerHTML = '';
   
   clearInterval(gameInterval);
@@ -82,7 +92,7 @@ function startGame() {
 
     heart.onclick = () => {
       score += 10;
-      document.getElementById('game-score').textContent = score;
+      if (scoreDisplay) scoreDisplay.textContent = score;
       heart.remove();
     };
 
