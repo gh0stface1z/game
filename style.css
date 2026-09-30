@@ -85,6 +85,12 @@ body {
   transform: scale(1.1) rotate(5deg);
 }
 
+.subtitle {
+  font-size: 0.9rem;
+  color: #a78bfa;
+  margin-top: 5px;
+}
+
 .password-box {
   margin-top: 15px;
   display: flex;
@@ -125,7 +131,7 @@ body {
   display: none;
 }
 
-/* PAINEL PRINCIPAL (DASHBOARD) */
+/* PAINEL PRINCIPAL */
 #main-content {
   width: 100%;
   max-width: 1000px;
@@ -192,7 +198,7 @@ header p {
   color: #f3e8ff;
 }
 
-/* MODAL / JANELAS DAS ABAS */
+/* MODAIS */
 .modal {
   position: fixed;
   inset: 0;
@@ -246,7 +252,10 @@ header p {
   gap: 10px;
 }
 
-/* ELEMENTOS DIVERSOS */
+.text-center { text-align: center; }
+.justify-center { justify-content: center; }
+
+/* DIVERSOS */
 .btn-action {
   background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
   color: #fff;
@@ -258,7 +267,7 @@ header p {
   margin-top: 10px;
 }
 
-.input-style, textarea {
+textarea {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
@@ -267,6 +276,20 @@ header p {
   color: #fff;
   margin-bottom: 12px;
   outline: none;
+}
+
+/* BISCOITO DA SORTE */
+#biscoito-btn {
+  font-size: 80px;
+  cursor: pointer;
+  margin: 20px 0;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+#biscoito-resposta {
+  font-size: 1.1rem;
+  color: #d8b4fe;
 }
 
 /* MINI GAME PEGA CORAÇÃO */
