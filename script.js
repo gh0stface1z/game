@@ -1,5 +1,21 @@
-// 1. ENVELOPE COM LACRE E ABERTURA SUAVE
-const envelope = document.getElementById('envelope');
+// 1. GERAR PARTÍCULAS
+const particlesContainer = document.getElementById('particles-js');
+if (particlesContainer) {
+  for (let i = 0; i < 25; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 5 + 3;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.animationDelay = `${Math.random() * 7}s`;
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// 2. ABERTURA DO ENVELOPE
+const envelopeContainer = document.getElementById('envelope-container');
 const unlockBtn = document.getElementById('unlock-btn');
 const passInput = document.getElementById('password-input');
 const gatekeeper = document.getElementById('gatekeeper');
@@ -12,17 +28,17 @@ function checkPassword() {
   if (val === 'linda') {
     errorMsg.style.display = 'none';
     
-    // Abre o envelope
-    envelope.classList.add('open');
+    // Adiciona a classe que abre o envelope
+    envelopeContainer.classList.add('open');
 
-    // Desaparece a tela inicial e mostra o painel principal
+    // Transição suave para a tela principal
     setTimeout(() => {
       gatekeeper.style.opacity = '0';
       setTimeout(() => {
         gatekeeper.style.visibility = 'hidden';
         mainContent.style.opacity = '1';
       }, 800);
-    }, 1200);
+    }, 1100);
 
   } else {
     errorMsg.style.display = 'block';
@@ -36,7 +52,7 @@ if (passInput) {
   });
 }
 
-// 2. MODAIS COM BLUR NO FUNDO
+// 3. ABRIR E FECHAR MODAIS
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
@@ -53,31 +69,31 @@ function closeModal(id) {
   }
 }
 
-// 3. BISCOITO DA SORTE DE PAPEL
+// 4. BISCOITO DA SORTE
 const frasesSorte = [
-  "Seu sorriso ilumina qualquer dia cinzento! ✨",
-  "Sorte a minha de ter você ao meu lado. 💖",
+  "Seu sorriso ilumina qualquer lugar! ✨",
+  "Sorte a minha de ter você por perto. 💜",
   "Uma dose extra de carinho está chegando para você!",
-  "Você é o meu pensamento favorito de todos os dias. 💜"
+  "Você é o meu pensamento favorito do dia! 💖"
 ];
 
 function crackCookie() {
-  const cookiePaper = document.getElementById('cookie-paper');
+  const cookieBox = document.getElementById('cookie-box');
   const fortuneText = document.getElementById('fortune-text');
   
-  if (cookiePaper && !cookiePaper.classList.contains('open')) {
+  if (cookieBox && !cookieBox.classList.contains('cracked')) {
     const sorte = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
     if (fortuneText) fortuneText.textContent = sorte;
-    cookiePaper.classList.add('open');
+    cookieBox.classList.add('cracked');
   }
 }
 
 function resetCookie() {
-  const cookiePaper = document.getElementById('cookie-paper');
-  if (cookiePaper) cookiePaper.classList.remove('open');
+  const cookieBox = document.getElementById('cookie-box');
+  if (cookieBox) cookieBox.classList.remove('cracked');
 }
 
-// 4. MINI GAME REFORMULADO
+// 5. MINI GAME
 let score = 0;
 let timeLeft = 20;
 let gameInterval;
@@ -93,8 +109,8 @@ function startGame() {
   const overlay = document.getElementById('game-overlay-msg');
   if (overlay) overlay.style.display = 'none';
 
-  const oldItems = canvas.querySelectorAll('.falling-item');
-  oldItems.forEach(item => item.remove());
+  const oldHearts = canvas.querySelectorAll('.game-heart');
+  oldHearts.forEach(h => h.remove());
 
   const catcher = document.getElementById('game-catcher');
   canvas.onmousemove = (e) => {
@@ -112,38 +128,38 @@ function startGame() {
 
   clearInterval(gameInterval);
   gameInterval = setInterval(() => {
-    const item = document.createElement('div');
-    item.className = 'falling-item';
-    item.textContent = '💖';
-    item.style.left = `${Math.random() * (canvas.clientWidth - 30)}px`;
-    item.style.top = '0px';
-    canvas.appendChild(item);
+    const heart = document.createElement('div');
+    heart.className = 'game-heart';
+    heart.textContent = '💖';
+    heart.style.left = `${Math.random() * (canvas.clientWidth - 30)}px`;
+    heart.style.top = '0px';
+    canvas.appendChild(heart);
 
     let top = 0;
     const fall = setInterval(() => {
       top += 3;
-      item.style.top = `${top}px`;
+      heart.style.top = `${top}px`;
 
       const catcherRect = catcher.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
+      const heartRect = heart.getBoundingClientRect();
 
       if (
-        itemRect.bottom >= catcherRect.top &&
-        itemRect.left <= catcherRect.right &&
-        itemRect.right >= catcherRect.left
+        heartRect.bottom >= catcherRect.top &&
+        heartRect.left <= catcherRect.right &&
+        heartRect.right >= catcherRect.left
       ) {
         score += 10;
         document.getElementById('game-score').textContent = score;
-        item.remove();
+        heart.remove();
         clearInterval(fall);
       }
 
       if (top > canvas.clientHeight) {
-        item.remove();
+        heart.remove();
         clearInterval(fall);
       }
     }, 25);
-  }, 700);
+  }, 750);
 }
 
 function endGame() {
@@ -152,6 +168,6 @@ function endGame() {
   const overlay = document.getElementById('game-overlay-msg');
   if (overlay) {
     overlay.style.display = 'flex';
-    overlay.textContent = `Fim de jogo! Você pegou ${score} mimos! 💖`;
+    overlay.textContent = `Fim de Jogo! Pontuação: ${score} 💖`;
   }
 }
