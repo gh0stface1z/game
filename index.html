@@ -3,240 +3,254 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feito Pra Você 🎀</title>
+  <title>Feito Com Amor 💌</title>
   <link rel="stylesheet" href="style.css">
-  <!-- CSS do FontAwesome para ícones fofos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- PARTÍCULAS DE FUNDO -->
-  <div id="particles-js"></div>
+  <!-- ELEMENTOS DECORATIVOS DE PAPEL NO FUNDO -->
+  <div class="bg-decorations">
+    <span class="paper-star pos-1">✦</span>
+    <span class="paper-star pos-2">✨</span>
+    <span class="paper-heart pos-3">🌸</span>
+    <span class="paper-star pos-4">✦</span>
+  </div>
 
-  <!-- TELA DE ENTRADA (ENVELOPE ANIMADO ENTRANDO E ABRINDO) -->
+  <!-- TELA DE ENTRADA (ENVELOPE EM TONS CLAROS E PAPEL DE VERDADE) -->
   <div id="gatekeeper">
-    <div class="envelope-container">
-      <div class="envelope-wrapper" id="envelope-wrapper">
-        <div class="envelope">
-          <div class="back"></div>
-          <div class="letter">
-            <div class="letter-content">
-              <h3>Para Você... 💖</h3>
-              <p>Como a gente sempre se chama?</p>
-              <div class="password-box">
-                <input type="text" id="password-input" placeholder="Sua resposta..." autocomplete="off">
-                <button id="unlock-btn">Entrar ✨</button>
-              </div>
-              <p class="error-msg" id="error-msg">Ops! Essa não é a palavra mágica...</p>
+    <div class="paper-envelope-container">
+      
+      <div class="envelope" id="envelope">
+        <!-- Flap Superior -->
+        <div class="flap top-flap"></div>
+        
+        <!-- Carta Interna (Desliza para cima ao abrir) -->
+        <div class="paper-letter">
+          <div class="letter-inner">
+            <span class="stamp">💌</span>
+            <h3>Para Você...</h3>
+            <p>Como a gente sempre se chama?</p>
+            <div class="input-group">
+              <input type="text" id="password-input" placeholder="Digite aqui..." autocomplete="off">
+              <button id="unlock-btn">Abrir Carta ✨</button>
             </div>
+            <p class="error-msg" id="error-msg">Ops! Essa não é a palavra mágica...</p>
           </div>
-          <div class="front"></div>
-          <div class="top-flap"></div>
-          <div class="heart-seal" id="heart-seal"><i class="fa-solid fa-heart"></i></div>
+        </div>
+
+        <!-- Flaps Laterais e Frontal -->
+        <div class="flap left-flap"></div>
+        <div class="flap right-flap"></div>
+        <div class="flap bottom-flap"></div>
+
+        <!-- Lacre de Cera de Coração -->
+        <div class="wax-seal" id="wax-seal">
+          <i class="fa-solid fa-heart"></i>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- PAINEL PRINCIPAL (LAYOUT EM LISTA ELEGANTE) -->
+  <!-- PAINEL PRINCIPAL (LAYOUT ESTILO DIÁRIO / SCRAPBOOK CLARO) -->
   <div id="main-content">
-    <header class="main-header">
-      <span class="badge">Especialmente Para Você</span>
+    <header class="scrapbook-header">
+      <div class="tape-tag">Com Todo O Meu Carinho</div>
       <h1>Nosso Cantinho 🎀</h1>
-      <p>Escolha qualquer tópico abaixo para explorar seus mimos:</p>
+      <p class="subtitle">Escolha um dos mimos abaixo para abrir:</p>
     </header>
 
     <!-- LISTA DE TÓPICOS -->
-    <div class="list-container">
-      
-      <div class="list-item" onclick="openModal('modal-feito-pra-voce')">
-        <div class="item-icon"><i class="fa-solid fa-ribbon"></i></div>
-        <div class="item-text">
+    <div class="paper-list">
+
+      <div class="list-card" onclick="openModal('modal-feito-pra-voce')">
+        <div class="card-badge">01</div>
+        <div class="card-icon"><i class="fa-solid fa-ribbon"></i></div>
+        <div class="card-info">
           <h3>Feito Pra Você</h3>
-          <p>Uma cartinha especial de abertura</p>
+          <p>Uma cartinha especial de boas-vindas</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">💌</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-cartinhas')">
-        <div class="item-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-cartinhas')">
+        <div class="card-badge">02</div>
+        <div class="card-icon"><i class="fa-solid fa-pen-nib"></i></div>
+        <div class="card-info">
           <h3>Cartinhas Pra Mim</h3>
-          <p>Deixe um recadinho fofo direto para mim</p>
+          <p>Deixe um recadinho fofo guardado aqui</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">💌</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-game')">
-        <div class="item-icon"><i class="fa-solid fa-gamepad"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-game')">
+        <div class="card-badge">03</div>
+        <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <div class="card-info">
           <h3>Pega Meu Coração</h3>
-          <p>Um mini-game divertido para coletar corações</p>
+          <p>Um jogo fofinho para coletar mimos</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🎮</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-biscoito')">
-        <div class="item-icon"><i class="fa-solid fa-cookie"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-biscoito')">
+        <div class="card-badge">04</div>
+        <div class="card-icon"><i class="fa-solid fa-cookie-bite"></i></div>
+        <div class="card-info">
           <h3>Sorte do Dia</h3>
-          <p>Abra um biscoito da sorte interativo em 3D</p>
+          <p>Abra um biscoito da sorte de papel</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🥠</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-cinema')">
-        <div class="item-icon"><i class="fa-solid fa-film"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-cinema')">
+        <div class="card-badge">05</div>
+        <div class="card-icon"><i class="fa-solid fa-film"></i></div>
+        <div class="card-info">
           <h3>Sessão Pipoca a Dois</h3>
           <p>Nossos filmes, animes e séries favoritos</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🍿</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-motivos')">
-        <div class="item-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-motivos')">
+        <div class="card-badge">06</div>
+        <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="card-info">
           <h3>Motivos Pelos Quais Você é Incrível</h3>
-          <p>Pequenos detalhes que me fazem te admirar</p>
+          <p>Detalhes especiais que eu amo em você</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">✨</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-mimos')">
-        <div class="item-icon"><i class="fa-solid fa-ticket"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-mimos')">
+        <div class="card-badge">07</div>
+        <div class="card-icon"><i class="fa-solid fa-ticket"></i></div>
+        <div class="card-info">
           <h3>Vale-Mimos</h3>
           <p>Cupons especiais para você resgatar</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🎟️</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-musicas')">
-        <div class="item-icon"><i class="fa-solid fa-music"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-musicas')">
+        <div class="card-badge">08</div>
+        <div class="card-icon"><i class="fa-solid fa-music"></i></div>
+        <div class="card-info">
           <h3>Músicas Que Lembram Você</h3>
-          <p>A nossa trilha sonora especial</p>
+          <p>A nossa trilha sonora inesquecível</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🎵</div>
       </div>
 
-      <div class="list-item" onclick="openModal('modal-precisar')">
-        <div class="item-icon"><i class="fa-solid fa-moon"></i></div>
-        <div class="item-text">
+      <div class="list-card" onclick="openModal('modal-precisar')">
+        <div class="card-badge">09</div>
+        <div class="card-icon"><i class="fa-solid fa-cloud-moon"></i></div>
+        <div class="card-info">
           <h3>Pra Quando Precisar</h3>
-          <p>Mensagens de apoio para momentos difíceis</p>
+          <p>Mensagens acolhedoras para qualquer momento</p>
         </div>
-        <div class="item-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="card-arrow">🌙</div>
       </div>
 
     </div>
   </div>
 
-  <!-- MODAIS (DESFOCAM O FUNDO AO ABRIR) -->
+  <!-- MODAIS COM DESFOQUE DE FUNDO -->
 
-  <!-- 🎀 1. Feito Pra Você -->
   <div class="modal" id="modal-feito-pra-voce">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-feito-pra-voce')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-ribbon"></i> Feito Pra Você</div>
-      <p class="placeholder-text">[Texto de Boas-Vindas virá aqui...]</p>
+      <div class="modal-header-title">🎀 Feito Pra Você</div>
+      <p class="paper-text">[Texto de Boas-Vindas virá aqui...]</p>
     </div>
   </div>
 
-  <!-- 💌 2. Cartinhas Pra Mim -->
   <div class="modal" id="modal-cartinhas">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-cartinhas')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-envelope-open-text"></i> Cartinhas Pra Mim</div>
-      <p style="margin-bottom: 15px; color: #d8b4fe;">Escreva uma mensagem carinhosa que vai direto para mim!</p>
-      <textarea rows="5" placeholder="Escreva aqui..."></textarea>
-      <button class="btn-action">Enviar Recadinho ✨</button>
+      <div class="modal-header-title">💌 Cartinhas Pra Mim</div>
+      <p style="margin-bottom: 15px; color: #7c687c;">Escreva um recadinho fofo que vai direto para o meu coração:</p>
+      <textarea rows="5" placeholder="Escreva aqui com carinho..."></textarea>
+      <button class="paper-btn">Enviar Recadinho ✨</button>
     </div>
   </div>
 
-  <!-- 🎮 3. Pega Meu Coração (GAME REFORMULADO ESTILO SLICER/BASKET) -->
   <div class="modal" id="modal-game">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-game')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-gamepad"></i> Pega Meu Coração</div>
-      <div class="game-header">
-        <span>Pontuação: <strong id="game-score">0</strong></span>
+      <div class="modal-header-title">🎮 Pega Meu Coração</div>
+      <div class="game-top-bar">
+        <span>Pontos: <strong id="game-score">0</strong></span>
         <span>Tempo: <strong id="game-timer">20s</strong></span>
       </div>
       <div id="game-canvas">
-        <div id="game-catcher"><i class="fa-solid fa-basket-shopping"></i></div>
+        <div id="game-catcher">🌸</div>
         <div id="game-overlay-msg">Clique em "Iniciar" para jogar!</div>
       </div>
-      <button class="btn-action" onclick="startGame()">Iniciar Jogo 🚀</button>
+      <button class="paper-btn" onclick="startGame()">Iniciar Jogo 🚀</button>
     </div>
   </div>
 
-  <!-- 🥠 4. Sorte do Dia (BISCOITO 3D) -->
   <div class="modal" id="modal-biscoito">
-    <div class="modal-body text-center">
+    <div class="paper-modal-body text-center">
       <button class="close-btn" onclick="closeModal('modal-biscoito')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title justify-center"><i class="fa-solid fa-cookie"></i> Sorte do Dia</div>
+      <div class="modal-header-title justify-center">🥠 Sorte do Dia</div>
       
-      <p style="color: #c084fc; font-size: 0.95rem;">Clique no biscoito para quebrá-lo!</p>
+      <p style="color: #8c738c; font-size: 0.95rem; margin-bottom: 10px;">Clique no biscoito de papel para quebrá-lo!</p>
       
-      <!-- BISCOITO 3D -->
-      <div class="cookie-scene" onclick="crackCookie()">
-        <div class="cookie-3d" id="cookie-3d">
-          <div class="cookie-half left"></div>
-          <div class="cookie-half right"></div>
-          <div class="paper-fortune" id="paper-fortune">
-            <span id="fortune-text">Seu sorriso ilumina tudo! ✨</span>
+      <div class="cookie-container" onclick="crackCookie()">
+        <div class="cookie-paper" id="cookie-paper">
+          <div class="side left-side"></div>
+          <div class="side right-side"></div>
+          <div class="paper-note" id="paper-note">
+            <span id="fortune-text">Seu sorriso deixa qualquer dia mais leve! ✨</span>
           </div>
         </div>
       </div>
 
-      <button class="btn-action" style="margin-top: 20px;" onclick="resetCookie()">Outro Biscoito 🔄</button>
+      <button class="paper-btn" style="margin-top: 20px;" onclick="resetCookie()">Outro Biscoito 🔄</button>
     </div>
   </div>
 
-  <!-- 🍿 5. Sessão Pipoca -->
   <div class="modal" id="modal-cinema">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-cinema')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-film"></i> Sessão Pipoca a Dois</div>
-      <div class="placeholder-text">[Lista de Filmes e Séries virá aqui...]</div>
+      <div class="modal-header-title">🍿 Sessão Pipoca a Dois</div>
+      <div class="paper-text">[Lista de Filmes e Séries virá aqui...]</div>
     </div>
   </div>
 
-  <!-- 🌟 6. Motivos -->
   <div class="modal" id="modal-motivos">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-motivos')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Motivos Pelos Quais Você é Incrível</div>
-      <div class="placeholder-text">[Mural de Cards com Motivos virá aqui...]</div>
+      <div class="modal-header-title">✨ Motivos Pelos Quais Você é Incrível</div>
+      <div class="paper-text">[Mural de Cards com Motivos virá aqui...]</div>
     </div>
   </div>
 
-  <!-- 🎟️ 7. Vale-Mimos -->
   <div class="modal" id="modal-mimos">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-mimos')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-ticket"></i> Vale-Mimos</div>
-      <div class="placeholder-text">[Cupons Interativos virão aqui...]</div>
+      <div class="modal-header-title">🎟️ Vale-Mimos</div>
+      <div class="paper-text">[Cupons Interativos virão aqui...]</div>
     </div>
   </div>
 
-  <!-- 🎵 8. Músicas -->
   <div class="modal" id="modal-musicas">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-musicas')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-music"></i> Músicas Que Lembram Você</div>
-      <div class="placeholder-text">[Playlist e Comentários virão aqui...]</div>
+      <div class="modal-header-title">🎵 Músicas Que Lembram Você</div>
+      <div class="paper-text">[Playlist e Comentários virão aqui...]</div>
     </div>
   </div>
 
-  <!-- 🌙 9. Pra Quando Precisar -->
   <div class="modal" id="modal-precisar">
-    <div class="modal-body">
+    <div class="paper-modal-body">
       <button class="close-btn" onclick="closeModal('modal-precisar')"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-title"><i class="fa-solid fa-moon"></i> Pra Quando Precisar</div>
-      <div class="placeholder-text">[Botões de Apoio e Recadinhos virão aqui...]</div>
+      <div class="modal-header-title">🌙 Pra Quando Precisar</div>
+      <div class="paper-text">[Botões de Apoio e Recadinhos virão aqui...]</div>
     </div>
   </div>
 
