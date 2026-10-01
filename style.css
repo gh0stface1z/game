@@ -1,28 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-cream: #faf5ef;
-  --paper-bg: #fffdf9;
-  --paper-border: #e8ded1;
-  --pink-soft: #f7d6e0;
-  --pink-accent: #e5989b;
-  --rose-deep: #b56576;
-  --text-main: #5c4d5c;
-  --text-soft: #8d7b8d;
+  --bg-main: #180d2b;
+  --purple-accent: #9333ea;
+  --purple-light: #c084fc;
+  --purple-card: rgba(38, 20, 66, 0.75);
+  --pink-accent: #f472b6;
+  --text-white: #f8fafc;
+  --text-muted: #d8b4fe;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
-  background: var(--bg-cream);
-  background-image: radial-gradient(#e5d8cb 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--text-main);
+  background: radial-gradient(circle at top, #2e1052, var(--bg-main));
+  color: var(--text-white);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -31,45 +28,39 @@ body {
   overflow-x: hidden;
 }
 
-/* DESFOQUE QUANDO O MODAL ABRE */
+/* DESFOQUE DO FUNDO AO ABRIR O MODAL */
 body.modal-open #main-content {
-  filter: blur(8px);
-  transition: filter 0.4s ease;
+  filter: blur(10px);
+  transition: filter 0.3s ease;
 }
 
-/* DECORAÇÕES DE PAPEL FLUTUANTES */
-.bg-decorations {
+/* PARTÍCULAS */
+#particles-js {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
 }
 
-.paper-star, .paper-heart {
+.particle {
   position: absolute;
-  font-size: 22px;
-  opacity: 0.4;
-  animation: floatLight 6s infinite ease-in-out;
+  background: rgba(192, 132, 252, 0.35);
+  border-radius: 50%;
+  animation: float 7s infinite ease-in-out;
 }
 
-.pos-1 { top: 10%; left: 8%; animation-delay: 0s; }
-.pos-2 { top: 20%; right: 10%; animation-delay: 2s; }
-.pos-3 { bottom: 15%; left: 12%; animation-delay: 4s; }
-.pos-4 { bottom: 25%; right: 8%; animation-delay: 1s; }
-
-@keyframes floatLight {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(8deg); }
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+  50% { transform: translateY(-25px) scale(1.2); opacity: 0.7; }
 }
 
 /* ==========================================================
-   ENVELOPE DE PAPEL REAL (TONS CLAROS & ANIMAÇÃO DE ABERTURA)
+   TELA DE ENTRADA E ENVELOPE ROXO INTERATIVO
    ========================================================== */
 #gatekeeper {
   position: fixed;
   inset: 0;
-  background: rgba(250, 245, 239, 0.95);
-  backdrop-filter: blur(5px);
+  background: var(--bg-main);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -77,301 +68,292 @@ body.modal-open #main-content {
   transition: opacity 0.8s ease, visibility 0.8s;
 }
 
-.paper-envelope-container {
-  width: 340px;
-  height: 240px;
+.envelope-container {
+  width: 320px;
+  height: 220px;
   position: relative;
 }
 
-.envelope {
+.envelope-box {
   width: 100%;
   height: 100%;
-  background: #f3eae1;
-  border-radius: 8px;
+  background: #2a1347;
+  border-radius: 12px;
   position: relative;
-  box-shadow: 0 12px 30px rgba(141, 123, 141, 0.18);
-  border: 1px solid var(--paper-border);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(147, 51, 234, 0.25);
+  border: 1px solid rgba(192, 132, 252, 0.25);
 }
 
-/* FLAPS DO ENVELOPE (DOBRADURAS DE PAPEL) */
-.envelope .flap {
+/* ABAS DO ENVELOPE (EFEITO 3D PURE CSS) */
+.envelope-flap-top {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 0;
   height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 115px solid #3c1a66;
+  transform-origin: top;
+  transition: transform 0.6s ease 0.1s, z-index 0.2s ease 0.3s;
+  z-index: 5;
+}
+
+.envelope-front-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid #2f1550;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
   z-index: 3;
 }
 
-.envelope .top-flap {
-  top: 0;
-  border-left: 170px solid transparent;
-  border-right: 170px solid transparent;
-  border-top: 130px solid #ebdcd0;
-  transform-origin: top;
-  transition: transform 0.6s ease 0.2s, z-index 0.2s ease 0.4s;
-  z-index: 5;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
-}
-
-.envelope .left-flap {
-  top: 0;
-  left: 0;
-  border-left: 170px solid #f0e3d7;
-  border-top: 120px solid transparent;
-  border-bottom: 120px solid transparent;
-}
-
-.envelope .right-flap {
+.envelope-front-right {
+  position: absolute;
   top: 0;
   right: 0;
-  border-right: 170px solid #f0e3d7;
-  border-top: 120px solid transparent;
-  border-bottom: 120px solid transparent;
+  width: 0;
+  height: 0;
+  border-right: 160px solid #2f1550;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
+  z-index: 3;
 }
 
-.envelope .bottom-flap {
+.envelope-front-bottom {
+  position: absolute;
   bottom: 0;
-  border-left: 170px solid transparent;
-  border-right: 170px solid transparent;
-  border-bottom: 135px solid #e8ded1;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-bottom: 115px solid #240f3b;
   z-index: 4;
 }
 
-/* LACRE DE CERA DE CORAÇÃO */
-.wax-seal {
+.heart-seal {
   position: absolute;
-  top: 110px;
+  top: 105px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--rose-deep), #9e4759);
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--purple-accent), var(--pink-accent));
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
   font-size: 20px;
-  box-shadow: 0 4px 10px rgba(181, 101, 118, 0.4);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4);
   z-index: 6;
-  cursor: pointer;
   transition: all 0.4s ease;
-  border: 2px dashed rgba(255,255,255,0.4);
 }
 
-/* CARTA DE PAPEL INTERNA */
-.paper-letter {
+/* CARTINHA DENTRO DO ENVELOPE */
+.envelope-card {
   position: absolute;
-  bottom: 12px;
+  bottom: 10px;
   left: 15px;
   right: 15px;
-  height: 210px;
-  background: var(--paper-bg);
-  border: 1px dashed var(--pink-accent);
+  height: 195px;
+  background: #1a0b30;
+  border: 1px solid var(--purple-light);
   border-radius: 10px;
-  padding: 16px;
+  padding: 15px;
   z-index: 2;
-  transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s;
 }
 
-.letter-inner {
+.card-content {
   text-align: center;
-  position: relative;
 }
 
-.letter-inner .stamp {
-  font-size: 28px;
+.card-content .card-icon {
+  font-size: 24px;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
-.letter-inner h3 {
-  font-family: 'Caveat', cursive;
-  font-size: 1.8rem;
-  color: var(--rose-deep);
-  line-height: 1;
+.card-content h3 {
+  color: var(--pink-accent);
+  font-size: 1.1rem;
+  margin-bottom: 2px;
 }
 
-.letter-inner p {
-  font-size: 0.85rem;
-  color: var(--text-soft);
+.card-content p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
   margin-bottom: 10px;
 }
 
-.input-group {
+.input-box {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.input-group input {
-  padding: 10px;
+.input-box input {
+  padding: 9px;
   border-radius: 8px;
-  border: 1px solid var(--paper-border);
-  background: #faf7f2;
-  color: var(--text-main);
+  border: 1px solid var(--purple-accent);
+  background: #100620;
+  color: #fff;
   text-align: center;
   outline: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
-.input-group button {
-  padding: 10px;
+.input-box button {
+  padding: 9px;
   border-radius: 8px;
   border: none;
-  background: var(--pink-accent);
+  background: linear-gradient(135deg, var(--purple-accent), var(--pink-accent));
   color: #fff;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(229, 152, 155, 0.3);
-  transition: background 0.2s;
-}
-
-.input-group button:hover {
-  background: var(--rose-deep);
+  font-size: 0.88rem;
 }
 
 .error-msg {
-  color: #d90429;
+  color: #f87171;
   font-size: 0.75rem;
-  margin-top: 5px;
+  margin-top: 4px;
   display: none;
 }
 
-/* ENVELOPE EM ESTADO ABERTO */
-.envelope.open .top-flap {
+/* CLASSE QUE FAZ O ENVELOPE ABRIR MESMO DE VERDADE */
+.envelope-container.open .envelope-flap-top {
   transform: rotateX(180deg);
   z-index: 1;
 }
 
-.envelope.open .wax-seal {
+.envelope-container.open .heart-seal {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0);
 }
 
-.envelope.open .paper-letter {
-  transform: translateY(-120px);
+.envelope-container.open .envelope-card {
+  transform: translateY(-110px);
   z-index: 10;
 }
 
 /* ==========================================================
-   PAINEL PRINCIPAL (ESTILO DIÁRIO / SCRAPBOOK CLARO)
+   PAINEL PRINCIPAL ROXO
    ========================================================== */
 #main-content {
   width: 100%;
-  max-width: 620px;
-  padding: 40px 20px;
+  max-width: 600px;
+  padding: 30px 20px;
   z-index: 2;
   opacity: 0;
-  transition: opacity 0.8s ease, filter 0.4s ease;
+  transition: opacity 0.8s ease, filter 0.3s ease;
 }
 
-.scrapbook-header {
+.header {
   text-align: center;
-  margin-bottom: 30px;
-  position: relative;
+  margin-bottom: 28px;
 }
 
-.tape-tag {
-  background: #f7e1d7;
-  color: var(--rose-deep);
-  font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
-  padding: 4px 18px;
+.header .badge {
+  background: rgba(192, 132, 252, 0.15);
+  color: var(--pink-accent);
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
   display: inline-block;
-  transform: rotate(-2deg);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   margin-bottom: 10px;
-  border-radius: 2px;
 }
 
-.scrapbook-header h1 {
-  font-family: 'Caveat', cursive;
-  font-size: 2.8rem;
-  color: var(--rose-deep);
+.header h1 {
+  font-size: 2.1rem;
+  background: linear-gradient(135deg, #fff, var(--pink-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
 }
 
-.scrapbook-header .subtitle {
-  color: var(--text-soft);
-  font-size: 0.95rem;
+.header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 /* LISTA DE CARTÕES */
-.paper-list {
+.list-container {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .list-card {
-  background: var(--paper-bg);
-  border: 1px solid var(--paper-border);
+  background: var(--purple-card);
+  border: 1px solid rgba(192, 132, 252, 0.2);
   border-radius: 16px;
   padding: 16px 20px;
   display: flex;
   align-items: center;
   gap: 16px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(141, 123, 141, 0.06);
+  backdrop-filter: blur(8px);
   transition: all 0.3s ease;
-  position: relative;
 }
 
 .list-card:hover {
-  transform: translateY(-3px);
+  transform: translateX(6px);
   border-color: var(--pink-accent);
-  box-shadow: 0 8px 20px rgba(229, 152, 155, 0.2);
-}
-
-.card-badge {
-  font-family: 'Caveat', cursive;
-  font-size: 1.1rem;
-  color: var(--rose-deep);
-  opacity: 0.6;
+  background: rgba(56, 30, 96, 0.85);
+  box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
 }
 
 .card-icon {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--pink-soft);
-  color: var(--rose-deep);
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(244, 114, 182, 0.3));
+  border: 1px solid rgba(244, 114, 182, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--pink-accent);
   font-size: 18px;
   flex-shrink: 0;
 }
 
-.card-info {
+.card-text {
   flex-grow: 1;
 }
 
-.card-info h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-main);
+.card-text h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
   margin-bottom: 2px;
 }
 
-.card-info p {
-  font-size: 0.82rem;
-  color: var(--text-soft);
+.card-text p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 .card-arrow {
-  font-size: 18px;
-  opacity: 0.7;
+  color: rgba(192, 132, 252, 0.4);
+  font-size: 14px;
 }
 
 /* ==========================================================
-   MODAIS EM PAPEL CLARO
+   MODAIS COM DESFOQUE ROXO
    ========================================================== */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(92, 77, 92, 0.3);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 7, 30, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 2000;
   display: flex;
   justify-content: center;
@@ -379,7 +361,7 @@ body.modal-open #main-content {
   padding: 20px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal.active {
@@ -387,22 +369,22 @@ body.modal-open #main-content {
   pointer-events: auto;
 }
 
-.paper-modal-body {
-  background: var(--paper-bg);
-  border: 1px solid var(--paper-border);
+.modal-body {
+  background: #21103a;
+  border: 1px solid rgba(192, 132, 252, 0.3);
   border-radius: 20px;
   width: 100%;
   max-width: 500px;
   max-height: 85vh;
   overflow-y: auto;
-  padding: 30px;
+  padding: 28px;
   position: relative;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-  transform: scale(0.92);
-  transition: transform 0.4s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
 }
 
-.modal.active .paper-modal-body {
+.modal.active .modal-body {
   transform: scale(1);
 }
 
@@ -410,133 +392,125 @@ body.modal-open #main-content {
   position: absolute;
   top: 18px;
   right: 18px;
-  background: #f5ebe0;
+  background: rgba(255,255,255,0.05);
   border: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  color: var(--text-soft);
+  color: var(--text-muted);
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modal-header-title {
-  font-family: 'Caveat', cursive;
-  font-size: 2rem;
-  color: var(--rose-deep);
-  margin-bottom: 15px;
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--pink-accent);
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.paper-text {
-  color: var(--text-soft);
-  font-size: 0.95rem;
+.modal-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
-.paper-btn {
-  background: var(--pink-accent);
+.action-btn {
+  background: linear-gradient(135deg, var(--purple-accent), var(--pink-accent));
   color: #fff;
   border: none;
-  padding: 12px 20px;
+  padding: 11px 20px;
   border-radius: 10px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   width: 100%;
   margin-top: 15px;
-  box-shadow: 0 4px 10px rgba(229, 152, 155, 0.3);
 }
 
 textarea {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid var(--paper-border);
-  background: #faf7f2;
-  color: var(--text-main);
+  border: 1px solid var(--purple-accent);
+  background: #110722;
+  color: #fff;
   outline: none;
   resize: none;
 }
 
-/* ==========================================================
-   BISCOITO DA SORTE DE PAPEL 
-   ========================================================== */
-.cookie-container {
+/* BISCOITO DA SORTE */
+.cookie-wrapper {
   width: 160px;
   height: 160px;
-  margin: 20px auto;
+  margin: 15px auto;
   cursor: pointer;
-  position: relative;
 }
 
-.cookie-paper {
+.cookie-box {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.cookie-paper .side {
+.cookie-part {
   position: absolute;
   width: 80px;
   height: 140px;
-  background: #e6ccb2;
+  background: linear-gradient(135deg, #eab308, #ca8a04);
   border-radius: 80px 0 0 80px;
-  box-shadow: inset -4px 0 8px rgba(0,0,0,0.08);
   transition: transform 0.6s ease;
 }
 
-.cookie-paper .left-side { left: 0; }
-.cookie-paper .right-side {
+.cookie-part.left { left: 0; }
+.cookie-part.right {
   right: 0;
   border-radius: 0 80px 80px 0;
-  background: #ddb892;
+  background: linear-gradient(135deg, #facc15, #eab308);
 }
 
-.paper-note {
+.cookie-message {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   width: 200px;
   background: #fff;
-  border: 1px dashed var(--pink-accent);
+  color: #1e1035;
   padding: 12px;
-  border-radius: 6px;
-  color: var(--rose-deep);
-  font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: transform 0.5s ease 0.3s;
   z-index: 5;
 }
 
-.cookie-paper.open .left-side { transform: translateX(-30px) rotate(-15deg); }
-.cookie-paper.open .right-side { transform: translateX(30px) rotate(15deg); }
-.cookie-paper.open .paper-note { transform: translate(-50%, -50%) scale(1); }
+.cookie-box.cracked .cookie-part.left { transform: translateX(-30px) rotate(-20deg); }
+.cookie-box.cracked .cookie-part.right { transform: translateX(30px) rotate(20deg); }
+.cookie-box.cracked .cookie-message { transform: translate(-50%, -50%) scale(1); }
 
-/* ==========================================================
-   GAME PEGA CORAÇÃO
-   ========================================================== */
-.game-top-bar {
+/* GAME */
+.game-info {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  color: var(--rose-deep);
-  font-weight: 700;
+  color: var(--pink-accent);
+  font-weight: 600;
 }
 
 #game-canvas {
   width: 100%;
-  height: 260px;
-  background: #fdf8f5;
+  height: 250px;
+  background: #110722;
   border-radius: 12px;
   position: relative;
   overflow: hidden;
-  border: 1px dashed var(--pink-accent);
+  border: 1px solid rgba(192, 132, 252, 0.3);
 }
 
 #game-catcher {
@@ -544,7 +518,7 @@ textarea {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 30px;
+  font-size: 28px;
   pointer-events: none;
 }
 
@@ -554,12 +528,12 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(250, 245, 239, 0.85);
-  color: var(--rose-deep);
-  font-weight: 700;
+  background: rgba(17, 7, 34, 0.85);
+  color: #fff;
+  font-weight: 600;
 }
 
-.falling-item {
+.game-heart {
   position: absolute;
   font-size: 24px;
 }
